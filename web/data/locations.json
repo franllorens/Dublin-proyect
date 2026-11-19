@@ -1,0 +1,38 @@
+[
+  {
+    "slug": "bizquip",
+    "name": "Bizquip",
+    "format": "Vintage teardrop trailer (the original, since ~2023)",
+    "address": "8 Burton Hall Rd, Sandyford Business Park, Dublin, D18 K5Y9",
+    "lat": 53.274585,
+    "lng": -6.204062,
+    "hours": {
+      "mon-fri": "07:30-15:00",
+      "sat-sun": null
+    }
+  },
+  {
+    "slug": "nova",
+    "name": "Nova Atria",
+    "format": "Trailer",
+    "address": "Nova Atria, Blackthorn Rd, Sandyford Business Park, Dublin 18",
+    "lat": 53.276966,
+    "lng": -6.2085833,
+    "hours": {
+      "mon-fri": "07:30-15:00",
+      "sat-sun": null
+    }
+  },
+  {
+    "slug": "kilternan",
+    "name": "Kilternan Drive-Thru",
+    "format": "Green shipping container with pink tile facade, drive-thru for 2 cars + walk-up (opened Aug 2026, designed by Third Mind Design)",
+    "address": "De La Salle Palmerston RFC, Kirwan Park, Enniskerry Rd, Kilternan, D18 DC56",
+    "lat": 53.245789,
+    "lng": -6.198952,
+    "hours": {
+      "mon-fri": "07:00-15:30",
+      "sat-sun": "08:00-15:00"
+    }
+  }
+]

@@ -1,0 +1,134 @@
+.pass {
+  --pw: 100%;
+  position: relative;
+  display: grid;
+  gap: 10px;
+  padding: 12px 13px 14px;
+  border-radius: 12px;
+  background: linear-gradient(180deg, #1b4a3f 0%, var(--forest) 40%, #143830 100%);
+  color: var(--cream);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.12) inset, 0 18px 30px -18px rgba(0, 0, 0, 0.7);
+  font-family: -apple-system, "SF Pro Text", var(--font-body), system-ui, sans-serif;
+  container-type: inline-size;
+}
+.top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.logo {
+  width: 30%;
+  color: var(--cream);
+}
+.header {
+  display: grid;
+  justify-items: end;
+}
+.label {
+  display: block;
+  font-size: max(9px, 3.1cqi);
+  letter-spacing: 0.06em;
+  font-weight: 600;
+  color: var(--pink);
+}
+.value {
+  font-size: max(16px, 7cqi);
+  font-weight: 500;
+  line-height: 1.05;
+  font-variant-numeric: tabular-nums;
+}
+.strip {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 6px 4px;
+  padding: 10px 10px;
+  border-radius: 6px;
+  background:
+    radial-gradient(120% 140% at 50% 0%, rgba(223, 176, 187, 0.12), transparent 60%),
+    #102e27;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.35);
+}
+.strip .slot:nth-child(n + 6) {
+  transform: translateX(calc(50% + 2px));
+}
+.slot {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  border: 1.5px dashed rgba(243, 236, 221, 0.28);
+}
+.slot[data-on="true"] {
+  border-color: transparent;
+}
+.sealWrap {
+  position: absolute;
+  inset: -6%;
+  transform: rotate(var(--rot));
+}
+.seal {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 1px 0 rgba(0, 0, 0, 0.25));
+}
+.burst {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.burst i {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 5px;
+  height: 5px;
+  margin: -2.5px;
+  border-radius: 50%;
+  background: var(--pink);
+  opacity: 0;
+  transform: rotate(var(--a)) translateX(0);
+}
+.primary {
+  display: grid;
+  gap: 1px;
+}
+.big {
+  font-size: max(18px, 8.4cqi);
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+.row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.small {
+  display: block;
+  font-size: max(12px, 4.6cqi);
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.qrBox {
+  justify-self: center;
+  display: grid;
+  justify-items: center;
+  gap: 3px;
+  margin-top: 4px;
+  padding: 8px 8px 5px;
+  background: #fff;
+  border-radius: 6px;
+  color: #333;
+  font-size: max(9px, 3cqi);
+  letter-spacing: 0.04em;
+}
+.qr {
+  width: max(70px, 30cqi);
+  height: auto;
+}
+.pass[data-reward="true"] .strip {
+  background:
+    radial-gradient(120% 140% at 50% 0%, rgba(223, 176, 187, 0.35), transparent 70%),
+    #102e27;
+}

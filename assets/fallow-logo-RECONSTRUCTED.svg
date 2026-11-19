@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400">
+  <!-- RECONSTRUCCIÓN a partir de fotos públicas (vasos, trailer, contenedor Kilternan). No es el archivo original. -->
+  <circle cx="200" cy="200" r="196" fill="#DFB0BB"/>
+  <g stroke="#173F35" stroke-width="7" fill="none" stroke-linecap="round">
+    <path d="M192 158 C186 138 176 124 160 114"/>
+    <path d="M182 134 C174 128 170 120 168 110"/>
+    <path d="M172 122 C164 118 158 112 155 104"/>
+    <path d="M208 158 C214 138 224 124 240 114"/>
+    <path d="M218 134 C226 128 230 120 232 110"/>
+    <path d="M228 122 C236 118 242 112 245 104"/>
+  </g>
+  <text x="200" y="235" text-anchor="middle" font-family="Playfair Display, Cormorant Garamond, Georgia, serif" font-size="76" font-weight="600" fill="#173F35">fallow</text>
+  <text x="200" y="272" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" font-size="17" letter-spacing="6" fill="#173F35">SPECIALITY COFFEE</text>
+</svg>

@@ -1,0 +1,19 @@
+{
+  "formatVersion": 1,
+  "passTypeIdentifier": "pass.com.workflowers.fallow",
+  "teamIdentifier": "TEAMID0000",
+  "serialNumber": "TEMPLATE",
+  "organizationName": "Fallow Speciality Coffee",
+  "description": "Fallow Club stamp card",
+  "logoText": "Fallow Club",
+  "backgroundColor": "rgb(23,63,53)",
+  "foregroundColor": "rgb(243,236,221)",
+  "labelColor": "rgb(223,176,187)",
+  "storeCard": {
+    "headerFields": [],
+    "primaryFields": [],
+    "secondaryFields": [],
+    "auxiliaryFields": [],
+    "backFields": []
+  }
+}

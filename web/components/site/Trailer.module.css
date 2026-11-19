@@ -1,0 +1,81 @@
+.trailer {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+.glow {
+  opacity: calc(var(--open) * 1);
+}
+.spill {
+  opacity: calc(var(--open) * 1);
+}
+.struts {
+  opacity: calc((var(--open) - 0.55) * 2.2);
+}
+.cup {
+  opacity: 0;
+  transform: translate(-14px, 6px);
+  transform-box: fill-box;
+}
+.cupIn .cup,
+:global(.cup-in) .cup {
+  opacity: 1;
+  transform: none;
+  transition: opacity 0.35s ease, transform 0.6s var(--ease-spring);
+}
+.steam {
+  stroke-dasharray: 16;
+  stroke-dashoffset: 16;
+  opacity: 0.85;
+}
+:global(.cup-in) .steam {
+  animation: steam 2.6s 0.5s ease-in-out infinite;
+}
+@keyframes steam {
+  0% {
+    stroke-dashoffset: 16;
+    opacity: 0;
+    transform: translateY(2px);
+  }
+  30% {
+    opacity: 0.85;
+  }
+  100% {
+    stroke-dashoffset: -16;
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+.sign {
+  transform-origin: 226px 88px;
+}
+.sign[data-show="true"] {
+  animation: swing 2.4s ease-in-out 1;
+}
+@keyframes swing {
+  0% {
+    transform: rotate(9deg);
+  }
+  35% {
+    transform: rotate(-5deg);
+  }
+  65% {
+    transform: rotate(2deg);
+  }
+  100% {
+    transform: rotate(0);
+  }
+}
+.signText {
+  font-family: var(--font-board);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  fill: var(--letter);
+}
+@media (prefers-reduced-motion: reduce) {
+  :global(.cup-in) .steam {
+    animation: none;
+    stroke-dashoffset: 0;
+    opacity: 0.6;
+  }
+}

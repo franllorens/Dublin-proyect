@@ -1,0 +1,99 @@
+{
+  "currency": "EUR",
+  "source": "Trailer letterboard photo, Nov 2026",
+  "sections": [
+    {
+      "name": "Coffee",
+      "items": [
+        {
+          "name": "Americano",
+          "hot": 3.6,
+          "iced": 4.1
+        },
+        {
+          "name": "Latte / Cappuccino",
+          "hot": 4.0,
+          "iced": 4.5
+        },
+        {
+          "name": "Flat White",
+          "hot": 3.9,
+          "iced": null
+        },
+        {
+          "name": "Mocha",
+          "hot": 4.5,
+          "iced": 4.9
+        },
+        {
+          "name": "Cortado / Macchiato",
+          "hot": 3.8,
+          "iced": null
+        }
+      ]
+    },
+    {
+      "name": "Not coffee",
+      "items": [
+        {
+          "name": "Matcha Latte",
+          "hot": 4.3,
+          "iced": 4.8
+        },
+        {
+          "name": "Chai Latte",
+          "hot": 4.2,
+          "iced": 4.7
+        },
+        {
+          "name": "Hot Chocolate",
+          "hot": 4.0,
+          "iced": null
+        }
+      ]
+    },
+    {
+      "name": "Specials",
+      "items": [
+        {
+          "name": "Pistachio Latte",
+          "hot": 4.6,
+          "iced": 5.1
+        },
+        {
+          "name": "Salted Caramel Latte",
+          "hot": 4.6,
+          "iced": 5.1
+        }
+      ]
+    }
+  ],
+  "addons": [
+    {
+      "name": "Alt milk (oat, coconut)",
+      "price": 0.5
+    },
+    {
+      "name": "Extra shot",
+      "price": 1.0
+    },
+    {
+      "name": "Syrup (vanilla, caramel, hazelnut)",
+      "price": 0.5
+    }
+  ],
+  "cabinet_no_prices": [
+    "Ham & cheese croissant",
+    "Croissants",
+    "Muffins",
+    "Toasties and grilled sandwiches",
+    "Sausage rolls",
+    "Banana bread",
+    "Brownies",
+    "Flapjacks",
+    "Matcha slice",
+    "Protein balls",
+    "Overnight oats",
+    "Chocolate chip cookies baked on site"
+  ]
+}

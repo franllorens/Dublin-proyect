@@ -1,0 +1,28 @@
+{
+  "name": "fallow-wallet",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Fallow Club: Apple Wallet + Google Wallet stamp cards, stamp API and PassKit web service (Next.js route handlers).",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "typecheck": "tsc --noEmit",
+    "google:class": "tsx scripts/create-google-class.ts"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "2.119.0",
+    "google-auth-library": "11.3.3",
+    "jsonwebtoken": "9.0.3",
+    "next": "14.2.35",
+    "passkit-generator": "3.7.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1"
+  },
+  "devDependencies": {
+    "@types/jsonwebtoken": "9.0.7",
+    "@types/node": "20.17.6",
+    "@types/react": "18.3.12",
+    "tsx": "4.19.2",
+    "typescript": "5.6.3"
+  }
+}

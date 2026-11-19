@@ -1,0 +1,50 @@
+.bar {
+  position: fixed;
+  z-index: 50;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(23, 63, 53, 0.94);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: var(--cream);
+  transform: translateY(-100%);
+  transition: transform 0.35s var(--ease-out);
+}
+.bar[data-show="true"] {
+  transform: none;
+}
+.inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 56px;
+}
+.home {
+  display: inline-flex;
+  padding: 8px 0;
+}
+.mark {
+  width: 76px;
+  height: auto;
+  color: var(--cream);
+}
+.links {
+  display: flex;
+  gap: 2px;
+}
+.links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 12px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+.links .club {
+  background: var(--pink);
+  color: var(--forest);
+  margin-left: 4px;
+}
