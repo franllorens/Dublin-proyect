@@ -7,7 +7,7 @@ Dos demos independientes en el mismo repo, cada una con su propio deploy:
 | Fallow Speciality Coffee | [`web/`](web/) (más el kit en la raíz) | servicio `Dublin-proyect`, root `web` |
 | The Coffee Shot | [`coffee-shot/`](coffee-shot/) | servicio `the-coffee-shot`, root `coffee-shot/web` |
 
-Skills de Claude Code del repo: [`.claude/skills/design-taste-frontend`](.claude/skills/design-taste-frontend) ([taste-skill](https://github.com/Leonxlnx/taste-skill) 2.5.1, MIT), usada para rediseñar The Coffee Shot.
+Skills de Claude Code del repo: [`.claude/skills/design-taste-frontend`](.claude/skills/design-taste-frontend) ([taste-skill](https://github.com/Leonxlnx/taste-skill) 2.5.1, MIT). Se probó un rediseño de The Coffee Shot con ella (commit 9360d9e) y se descartó: el sitio volvió a la versión anterior.
 
 ---
 

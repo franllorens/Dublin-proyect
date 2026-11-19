@@ -16,11 +16,11 @@
   display: grid;
   gap: 16px;
 }
-.head h1 {
+.head h2 {
   font-size: var(--t-2xl);
   max-width: 13ch;
 }
-.head h1 em {
+.head h2 em {
   font-style: italic;
   font-weight: 500;
   color: var(--gold-ink);

@@ -2,8 +2,6 @@
 
 Demo concept para The Coffee Shot (The Plaza, Beacon South Quarter, Sandyford): sitio público mobile-first, club de sellos en Apple/Google Wallet con «tu pedido de siempre», PWA del barista y panel del dueño. Mismo alcance que Fallow, en su propia carpeta y con su propio deploy.
 
-La home está rediseñada con la skill [taste-skill](https://github.com/Leonxlnx/taste-skill) (instalada en `../.claude/skills/design-taste-frontend`), que la verifica en un Chrome real: **GATE: PASS**. El reporte completo de la skill está en [`web/README.md`](web/README.md).
-
 | Carpeta | Qué hay |
 | --- | --- |
 | [`web/`](web/) | **La app** (Next.js 14 + TypeScript), con el backend de Wallet incluido. Ver [`web/README.md`](web/README.md) |

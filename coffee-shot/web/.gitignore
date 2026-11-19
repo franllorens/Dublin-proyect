@@ -2,7 +2,3 @@ node_modules
 .next
 .env*.local
 *.tsbuildinfo
-.taste-skill/*
-!.taste-skill/waivers.json
-!.taste-skill/history.json
-shots/
