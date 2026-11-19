@@ -1,5 +1,4 @@
 import menu from "@/data/menu.json";
-import { CopperLamp } from "./Illustrations";
 import { ChalkReveal } from "./ChalkReveal";
 import s from "./MenuBoard.module.css";
 
@@ -55,17 +54,12 @@ export function MenuBoard() {
     <section className={s.section} id="menu" aria-labelledby="menu-title">
       <div className={`wrap ${s.wrap}`}>
         <header className={s.head}>
-          <h2 id="menu-title">The boards.</h2>
+          <h1 id="menu-title">The full menu</h1>
           <p>
             Chalked up behind the counter, the same as you&rsquo;d read them inside. Every sandwich can go on a gluten-free bagel
             or a tomato wrap.
           </p>
         </header>
-
-        <div className={s.lamps} aria-hidden="true">
-          <CopperLamp id="lampM1" className={s.lamp} cord={40} delay={0.2} />
-          <CopperLamp id="lampM2" className={`${s.lamp} ${s.lamp2}`} cord={64} delay={0.5} />
-        </div>
 
         <div id="boards" className={s.boards}>
           <div className={`${s.board} ${s.big}`}>

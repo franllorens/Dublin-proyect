@@ -21,11 +21,18 @@ const USUALS = [
   ...menu.new_on_instagram_no_prices.drinks.filter((d) => !d.includes(":")),
 ];
 
-export function Club({ live }: { live: boolean }) {
+type ClubProps = {
+  live: boolean;
+  /** Prefilled from the home page's club form (GET /club/card?name=..&usual=..). */
+  initialName?: string;
+  initialUsual?: string;
+};
+
+export function Club({ live, initialName = "", initialUsual = "" }: ClubProps) {
   const phone = useRef<PhoneHandle>(null);
   const section = useRef<HTMLElement>(null);
-  const [name, setName] = useState("");
-  const [usual, setUsual] = useState("");
+  const [name, setName] = useState(initialName.slice(0, 40));
+  const [usual, setUsual] = useState(initialUsual.slice(0, 40));
   const [pass, setPass] = useState<PassData | null>(null);
   const [busy, setBusy] = useState(false);
   const [links, setLinks] = useState<Links | null>(null);
@@ -123,9 +130,9 @@ export function Club({ live }: { live: boolean }) {
     <section ref={section} className={s.section} id="club" aria-labelledby="club-title">
       <div className={`wrap ${s.grid}`}>
         <header className={s.head}>
-          <h2 id="club-title">
-            Nine shots, <em>then one on us.</em>
-          </h2>
+          <h1 id="club-title">
+            {initialName.trim() ? `${initialName.trim().slice(0, 40)}, your card is ready.` : "Your club card."} <em>Pick your Wallet.</em>
+          </h1>
           <p>
             The Coffee Shot Club is a stamp card that lives in Apple Wallet or Google Wallet. Every coffee fills a shot glass on
             the card. No app to download, no paper card going soft in your pocket.
@@ -154,7 +161,7 @@ export function Club({ live }: { live: boolean }) {
           </li>
           <li>
             <b>+1</b>
-            <span>when you share your cup to your story, once a week</span>
+            <span>when you share your cup to your story, once a week (our sticker says #Ad)</span>
           </li>
           <li>
             <b>9</b>
