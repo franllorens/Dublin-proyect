@@ -1,0 +1,71 @@
+{
+  "currency": "EUR",
+  "source": "Read off an undated Google photo of the chalkboards (see kit/photos/chalkboard-detail.jpg). Historic: confirm every price with the café before going live. null = price on the board but not readable in the photo.",
+  "prices_confirmed": false,
+  "boards": [
+    {
+      "slug": "hot",
+      "title": "Coffee & Tea",
+      "items": [
+        { "name": "Americano", "price": null },
+        { "name": "Cappuccino", "price": null },
+        { "name": "Flat White", "note": "2 shots", "price": null },
+        { "name": "Single Espresso", "price": 2.3 },
+        { "name": "Double Espresso", "price": null },
+        { "name": "Piccolo", "price": null },
+        { "name": "Macchiato", "price": null },
+        { "name": "Barista Choice", "price": null },
+        { "name": "Matcha Latte", "price": 3.2 },
+        { "name": "Mocha", "price": null },
+        { "name": "Hot Chocolate", "price": null },
+        { "name": "Chai", "price": null },
+        { "name": "Tea", "price": null },
+        { "name": "Speciality Tea", "price": null }
+      ]
+    },
+    {
+      "slug": "sandwiches",
+      "title": "Sandwiches",
+      "items": [
+        { "name": "Coffee Shot Special", "price": 6.2 },
+        { "name": "CBLT", "price": 6.2 },
+        { "name": "Italian Hero", "price": 6.3 },
+        { "name": "Ham & Cheese", "price": 5.8 },
+        { "name": "Tuna Mix", "price": 6.0 },
+        { "name": "The Ruben", "price": 6.4 },
+        { "name": "Vegetarian Wrap", "price": 5.8 },
+        { "name": "Vegetarian / Ham Quiche", "price": 6.6 },
+        { "name": "Coffee Shot Chicken Salad", "price": 5.9 }
+      ],
+      "footnote": "All sandwiches can be made on gluten free bagel or tomato wrap"
+    },
+    {
+      "slug": "iced",
+      "title": "Iced",
+      "items": [
+        { "name": "Iced Hazelnut", "price": 3.6 },
+        { "name": "Fruit Frappe", "note": "Mango · Strawberry · Summer fruits", "price": 3.9 },
+        { "name": "Iced Matcha", "price": 3.2 },
+        { "name": "Cold Brew Coffees", "note": "extra", "price": 0.3, "addon": true }
+      ]
+    }
+  ],
+  "new_on_instagram_no_prices": {
+    "drinks": [
+      "Matcha: hot, iced, strawberry, blueberry, pistachio",
+      "Summer Frappes",
+      "Pistachio Iced Latte",
+      "Salted Caramel Iced Latte"
+    ],
+    "cabinet": [
+      "Porridge",
+      "Sausage rolls, meat & vegan",
+      "Croissants",
+      "Chocolate twists",
+      "Scones",
+      "Doughnuts",
+      "Vegan protein balls",
+      "Açaí bowls"
+    ]
+  }
+}

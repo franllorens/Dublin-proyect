@@ -1,0 +1,254 @@
+.section {
+  position: relative;
+  background-color: var(--tile);
+  background-image: var(--tiles);
+  background-size: 64px 64px;
+  padding-block: clamp(64px, 10vw, 120px) clamp(72px, 10vw, 128px);
+  overflow: hidden;
+}
+.wrap {
+  position: relative;
+}
+.head {
+  max-width: 38rem;
+  position: relative;
+  z-index: 2;
+}
+.head h2 {
+  font-size: var(--t-2xl);
+}
+.head p {
+  margin-top: 16px;
+  font-size: var(--t-lg);
+  color: var(--ink-soft);
+}
+
+.lamps {
+  display: none;
+}
+
+/* ── the boards ── */
+.boards {
+  position: relative;
+  display: grid;
+  gap: 22px;
+  margin-top: 40px;
+}
+.board {
+  --chalk-line: rgba(242, 239, 232, 0.62);
+  position: relative;
+  color: var(--chalk);
+  background:
+    radial-gradient(60% 40% at 22% 18%, rgba(255, 255, 255, 0.055), transparent 70%),
+    radial-gradient(50% 45% at 78% 70%, rgba(255, 255, 255, 0.045), transparent 70%),
+    radial-gradient(30% 20% at 60% 35%, rgba(255, 255, 255, 0.03), transparent 70%),
+    linear-gradient(180deg, #23211e, var(--board) 40%, #1a1816);
+  border-radius: 4px;
+  padding: 26px 20px 24px;
+  box-shadow:
+    0 2px 0 rgba(255, 255, 255, 0.04) inset,
+    0 30px 50px -30px rgba(20, 14, 8, 0.75),
+    0 4px 10px -4px rgba(20, 14, 8, 0.4);
+  font-family: var(--font-chalk);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+/* the hand-drawn frame line */
+.board::before {
+  content: "";
+  position: absolute;
+  inset: 10px;
+  border: 1.5px solid var(--chalk-line);
+  border-radius: 3px 6px 4px 7px / 6px 3px 7px 4px;
+  pointer-events: none;
+  opacity: 0.8;
+}
+.marquee {
+  text-align: center;
+  font-size: clamp(2.3rem, 1.6rem + 3vw, 3.4rem);
+  line-height: 1;
+  letter-spacing: 0.06em;
+  margin-bottom: 4px;
+}
+.cols {
+  display: grid;
+  gap: 26px;
+}
+.list ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.boardHead {
+  font-family: var(--font-chalk);
+  font-weight: 700;
+  font-size: clamp(2.1rem, 1.6rem + 2vw, 2.7rem);
+  letter-spacing: 0.04em;
+  line-height: 1.1;
+  margin-bottom: 6px;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 8px;
+  text-decoration-color: var(--chalk-line);
+}
+.item {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  font-size: clamp(1.55rem, 1.35rem + 0.8vw, 1.85rem);
+  line-height: 1.32;
+}
+.name {
+  flex: 0 1 auto;
+  min-width: 0;
+}
+.note {
+  font-size: 0.68em;
+  margin-left: 8px;
+  color: var(--chalk-soft);
+  white-space: nowrap;
+}
+.item[data-long-note] {
+  flex-wrap: wrap;
+}
+.item[data-long-note] .name {
+  display: contents;
+}
+.item[data-long-note] .note {
+  order: 9;
+  flex-basis: 100%;
+  margin: -6px 0 2px;
+  white-space: normal;
+}
+.dots {
+  flex: 1 1 24px;
+  min-width: 24px;
+  border-bottom: 3px dotted rgba(242, 239, 232, 0.42);
+  transform: translateY(-6px);
+}
+.price {
+  flex: none;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.unread {
+  color: rgba(242, 239, 232, 0.5);
+}
+.foot {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1.5px solid var(--chalk-line);
+  text-align: center;
+  font-size: 1.4rem;
+  line-height: 1.25;
+}
+.rule {
+  border: 0;
+  border-top: 1.5px solid var(--chalk-line);
+  margin: 20px 0 16px;
+}
+.sub {
+  font-size: 1.25rem;
+  color: var(--chalk-soft);
+  margin: -4px 0 6px;
+  text-transform: none;
+}
+.plain {
+  font-size: clamp(1.45rem, 1.3rem + 0.6vw, 1.7rem);
+  line-height: 1.3;
+  padding-left: 20px;
+  position: relative;
+}
+.plain::before {
+  content: "–";
+  position: absolute;
+  left: 2px;
+}
+
+/* the paper tag taped to the board */
+.tag {
+  justify-self: start;
+  max-width: 21rem;
+  background: #fffaf0;
+  color: var(--ink);
+  font-size: 0.86rem;
+  line-height: 1.4;
+  padding: 10px 14px 11px;
+  border: 1.5px dashed rgba(111, 90, 42, 0.6);
+  border-radius: 3px;
+  transform: rotate(-1.2deg);
+  box-shadow: 0 8px 18px -12px rgba(20, 14, 8, 0.55);
+  position: relative;
+}
+.tag::before {
+  content: "";
+  position: absolute;
+  top: -9px;
+  left: 50%;
+  width: 54px;
+  height: 18px;
+  transform: translateX(-50%) rotate(2deg);
+  background: rgba(236, 227, 210, 0.85);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+.tag b {
+  font-weight: 600;
+}
+
+/* ── chalked in, line by line (client sets data-chalk when the boards start below the fold) ── */
+.boards[data-chalk] .row {
+  clip-path: inset(-10% 100% -10% 0);
+}
+.boards[data-chalk="play"] .row {
+  clip-path: inset(-10% -2% -10% 0);
+  transition: clip-path 0.62s cubic-bezier(0.55, 0.1, 0.45, 0.95) calc(var(--i, 0) * 85ms);
+}
+
+@media (min-width: 720px) {
+  .cols {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 48px;
+  }
+}
+
+@media (min-width: 1000px) {
+  .lamps {
+    display: block;
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+  }
+  .lamp {
+    top: calc(-1 * clamp(64px, 10vw, 120px));
+    left: 34%;
+    --lamp-w: 110px;
+  }
+  .lamp2 {
+    left: 76%;
+  }
+  .boards {
+    grid-template-columns: minmax(0, 2.15fr) minmax(0, 1fr);
+    align-items: start;
+    gap: 28px;
+    margin-top: 56px;
+  }
+  .board {
+    padding: 34px 38px 30px;
+  }
+  .big .item {
+    font-size: 1.7rem;
+  }
+  .narrow {
+    margin-top: 48px;
+  }
+  .narrow .item,
+  .narrow .plain {
+    font-size: 1.55rem;
+  }
+  .tag {
+    grid-column: 2;
+    justify-self: end;
+    margin-top: -6px;
+  }
+}

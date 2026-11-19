@@ -1,0 +1,19 @@
+{
+  "formatVersion": 1,
+  "passTypeIdentifier": "pass.com.workflowers.coffeeshot",
+  "teamIdentifier": "TEAMID0000",
+  "serialNumber": "TEMPLATE",
+  "organizationName": "The Coffee Shot",
+  "description": "The Coffee Shot Club stamp card",
+  "logoText": "The Coffee Shot Club",
+  "backgroundColor": "rgb(20,20,20)",
+  "foregroundColor": "rgb(243,234,214)",
+  "labelColor": "rgb(201,169,97)",
+  "storeCard": {
+    "headerFields": [],
+    "primaryFields": [],
+    "secondaryFields": [],
+    "auxiliaryFields": [],
+    "backFields": []
+  }
+}

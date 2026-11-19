@@ -1,0 +1,46 @@
+{
+  "name": "The Coffee Shot",
+  "source": "Brand dossier (coffee-shot/kit), Google Maps & Places 19 Nov 2026",
+  "colors": {
+    "gold": "#A98F4F",
+    "coffee": "#9D7A35",
+    "seal_black": "#141414",
+    "white": "#FFFFFF",
+    "cream": "#F5EFE3",
+    "copper": "#B87333",
+    "chalkboard": "#1E1C1A",
+    "dark_wood": "#332A23"
+  },
+  "colors_note": "Sampled from the official logo file and photos. Approximate, not an official palette.",
+  "logo": "Closed circular seal: black bottle-cap ring with white ticks, thin gold rule, white field, 'THE COFFEE' arched on top and 'SHOT' at the base in a gold classic serif, an espresso shot glass with a coffee bean and three curls of steam between double black rules. Facade variant: cream rectangular panel with a double gold rule and the name in serif caps.",
+  "logo_file": "kit/the-coffee-shot-logo-OFFICIAL-400.png (real file, from their gift-card shop on me2you.ie; ask for the vector)",
+  "cup_line": "Speciality coffees & teas freshly made to order",
+  "usp_quote": "Sandyford's newest coffee establishment. Our USP – we love coffee, are serious about coffee and have sourced the best beans to make it.",
+  "voice": "The owner talking from behind the counter: warm, grateful, signs off with trailing dots ('As Ever......').",
+  "people": { "owner": "Mark Belton (owner and barista)", "staff": ["Jiri"] },
+  "suppliers": [
+    { "what": "Coffee", "who": "Badger & Dodo", "where": "Fermoy, Co. Cork", "detail": "Red Rock Espresso Blend (still current? to confirm)" },
+    { "what": "Tea", "who": "Suki Tea", "where": "Belfast", "detail": "Speciality teas" },
+    { "what": "Bread", "who": "Arun Bakery", "where": null, "detail": null },
+    { "what": "Treats", "who": "Brodericks", "where": null, "detail": "Peanut butter caramel slice" },
+    { "what": "Crisps", "who": "Keoghs", "where": null, "detail": "The barrel by the counter" },
+    { "what": "Plant milk", "who": "Califia Farms", "where": null, "detail": "In the Pistachio Iced Latte" },
+    { "what": "Reusable cups", "who": "2GoCup", "where": null, "detail": null }
+  ],
+  "socials": {
+    "facebook": "https://www.facebook.com/thecoffeeshot",
+    "instagram_candidates": ["@thecoffeeshot_bsq", "@thecoffeeshotsandyford"],
+    "instagram_to_confirm": true,
+    "gift_cards": "https://www.me2you.ie"
+  },
+  "ratings_nov_2026": [
+    { "source": "Google", "rating": 4.5, "count": 735 },
+    { "source": "Facebook", "rating": 4.8, "count": 71 },
+    { "source": "TripAdvisor", "rating": 4.0, "count": 52 }
+  ],
+  "quotes": [
+    { "text": "Mark seems to know everyone's name and order, as does Jiri.", "source": "TripAdvisor review" },
+    { "text": "A little gem… everything from the coffee to the crisps has been thoughtfully and carefully sourced.", "source": "Georgina Campbell's Ireland Guide" },
+    { "text": "Great patio overlooking a square.", "source": "Customer review" }
+  ]
+}

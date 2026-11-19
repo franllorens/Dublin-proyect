@@ -1,0 +1,25 @@
+{
+  "slug": "plaza",
+  "name": "The Coffee Shot",
+  "place": "The Plaza, Beacon South Quarter",
+  "address": "Unit 2, The Plaza, Beacon South Quarter, Sandyford, Dublin 18, D18 X3Y4",
+  "address_to_confirm": "Unit 2 The Plaza (Google) or Unit 13 The Courtyard (older listings)",
+  "lat": 53.2772638,
+  "lng": -6.2171939,
+  "maps_url": "https://maps.app.goo.gl/Pmd25sMybysfcoQq7",
+  "google_cid": "0x48670909549c6937:0x1b18717a0992080b",
+  "phone": "(01) 293 7790",
+  "phone_e164": "+35312937790",
+  "email": "thecoffeeshot@outlook.ie",
+  "hours": {
+    "mon": "07:00-18:00",
+    "tue": "07:00-18:00",
+    "wed": "07:00-18:00",
+    "thu": "07:00-18:00",
+    "fri": "07:00-18:00",
+    "sat": "08:00-18:00",
+    "sun": "09:00-17:00"
+  },
+  "hours_to_confirm": "Sunday close: 17:00 (Google) or 18:00 (other listings)",
+  "services": ["Dine-in", "Terrace on the Plaza", "Takeaway", "Vegetarian options", "Accessible"]
+}

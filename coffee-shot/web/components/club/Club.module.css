@@ -1,0 +1,227 @@
+.section {
+  padding-block: clamp(72px, 11vw, 140px);
+  background:
+    radial-gradient(70% 50% at 80% 30%, rgba(255, 196, 112, 0.28), transparent 70%),
+    var(--cream-2);
+  color: var(--ink);
+  overflow: clip;
+}
+.grid {
+  display: grid;
+  gap: 28px;
+  grid-template-areas: "head" "usual" "rules" "stage" "controls";
+}
+.head {
+  grid-area: head;
+  display: grid;
+  gap: 16px;
+}
+.head h2 {
+  font-size: var(--t-2xl);
+  max-width: 13ch;
+}
+.head h2 em {
+  font-style: italic;
+  font-weight: 500;
+  color: var(--gold-ink);
+}
+.head p {
+  max-width: 44ch;
+  font-size: var(--t-lg);
+  color: var(--ink-soft);
+}
+
+/* the review quote that the "usual" feature answers */
+.usualNote {
+  grid-area: usual;
+  margin: 0;
+  padding: 20px 20px 18px;
+  border-radius: var(--r-md);
+  background: var(--black);
+  color: var(--cream);
+  display: grid;
+  gap: 6px;
+  max-width: 560px;
+}
+.usualNote blockquote {
+  margin: 0;
+}
+.usualNote blockquote p {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.55rem;
+  line-height: 1.15;
+}
+.usualNote figcaption {
+  font-size: 0.82rem;
+  color: #d0c8b8;
+}
+.usualText {
+  margin-top: 10px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(201, 169, 97, 0.4);
+  font-size: 0.98rem;
+  color: var(--gold-pale);
+}
+
+.rules {
+  grid-area: rules;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px 14px;
+}
+.rules li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px;
+  align-items: start;
+  font-size: 0.95rem;
+  line-height: 1.3;
+}
+.rules b {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1.5px solid var(--black);
+  font-family: var(--font-caps);
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+.rules li:last-child b {
+  background: var(--black);
+  color: var(--gold-light);
+}
+.stage {
+  grid-area: stage;
+  display: grid;
+  justify-items: center;
+  padding-block: 8px;
+}
+.controls {
+  grid-area: controls;
+  display: grid;
+  gap: 12px;
+  align-content: start;
+  max-width: 560px;
+  width: 100%;
+  justify-self: center;
+}
+.form {
+  display: grid;
+  gap: 12px;
+}
+.fields {
+  display: grid;
+  gap: 12px;
+}
+.field {
+  display: grid;
+  gap: 6px;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+.field small {
+  font-weight: 400;
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+}
+.field input {
+  min-height: 50px;
+  padding: 0 16px;
+  border-radius: 12px;
+  border: 1.5px solid var(--black);
+  background: #fffdf8;
+  font-size: 1.05rem;
+}
+.field input::placeholder {
+  color: #6e665a;
+}
+.walletBtns {
+  display: grid;
+  gap: 10px;
+}
+.wbtn {
+  width: 100%;
+  white-space: nowrap;
+  padding-inline: 0.9em;
+  border-radius: 12px;
+  min-height: 52px;
+}
+.mode {
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+}
+.after {
+  display: grid;
+  gap: 12px;
+}
+.big {
+  min-height: 58px;
+  font-size: 1.08rem;
+  border-radius: 14px;
+}
+/* a tiny gold shot glass on the pour button */
+.shotIcon {
+  width: 16px;
+  height: 22px;
+  clip-path: polygon(0 0, 100% 0, 84% 100%, 16% 100%);
+  background: linear-gradient(180deg, transparent 0 30%, #c99a5b 30% 42%, #6b4520 42% 72%, var(--gold-light) 72%);
+  box-shadow: inset 0 0 0 2px var(--gold-light);
+}
+.links a {
+  font-weight: 600;
+}
+.reset {
+  justify-self: start;
+  min-height: 44px;
+  padding: 0 4px;
+  border: 0;
+  background: none;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  font-size: 0.95rem;
+}
+.notice {
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #fff6e4;
+  font-size: 0.92rem;
+}
+.fine {
+  font-size: 0.82rem;
+  color: var(--ink-soft);
+  max-width: 48ch;
+}
+
+@media (min-width: 640px) {
+  .fields {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 900px) {
+  .grid {
+    grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+    grid-template-areas: "head stage" "usual stage" "rules stage" "controls stage";
+    grid-template-rows: auto auto auto 1fr;
+    column-gap: clamp(32px, 6vw, 96px);
+  }
+  .rules {
+    max-width: 560px;
+  }
+  .controls {
+    justify-self: start;
+  }
+  .walletBtns {
+    grid-template-columns: 1fr 1fr;
+  }
+  .stage {
+    align-self: center;
+  }
+}

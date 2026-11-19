@@ -1,0 +1,161 @@
+.seal {
+  overflow: visible;
+}
+.seal text {
+  font-kerning: normal;
+}
+
+/* ── intro: CSS only, so it costs no JS and never blocks the LCP ── */
+.ring,
+.text,
+.lines,
+.glass,
+.liquid,
+.pour,
+.bean,
+.steam path {
+  transform-box: fill-box;
+}
+
+.intro .ring {
+  transform-origin: center;
+  animation: screw 1.15s var(--ease-out) var(--seal-delay, 0.9s) both;
+}
+.intro .text {
+  animation: inkIn 0.9s ease-out calc(var(--seal-delay, 0.9s) + 0.35s) both;
+}
+.intro .lines {
+  animation: inkIn 0.7s ease-out calc(var(--seal-delay, 0.9s) + 0.55s) both;
+}
+.intro .pour {
+  transform-origin: top;
+  animation: pour 1.5s cubic-bezier(0.45, 0, 0.25, 1) calc(var(--seal-delay, 0.9s) + 0.8s) both;
+}
+.intro .liquid {
+  transform-origin: bottom;
+  animation: fill 1.25s cubic-bezier(0.3, 0, 0.2, 1) calc(var(--seal-delay, 0.9s) + 1s) both;
+}
+.intro .bean {
+  animation: beanIn 0.6s var(--ease-spring) calc(var(--seal-delay, 0.9s) + 2s) both;
+}
+.intro .steam path {
+  stroke-dasharray: 1;
+  animation:
+    draw 0.9s ease-out calc(var(--seal-delay, 0.9s) + 2.1s + var(--i) * 0.16s) both,
+    waft 3.6s ease-in-out calc(var(--seal-delay, 0.9s) + 3.2s + var(--i) * 0.4s) 4;
+}
+
+@keyframes screw {
+  from {
+    transform: rotate(-70deg) scale(0.92);
+    opacity: 0;
+  }
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+@keyframes inkIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@keyframes pour {
+  0% {
+    transform: scaleY(0);
+    opacity: 1;
+  }
+  35% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+  80% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scaleY(1);
+    opacity: 0;
+  }
+}
+@keyframes fill {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+.intro .bean {
+  transform-origin: center;
+}
+@keyframes beanIn {
+  from {
+    opacity: 0;
+    transform: scale(0.4);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes waft {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(-3px);
+    opacity: 0.55;
+  }
+}
+
+/* Static liquid outside the intro (the pour stream only exists while pouring). */
+.seal:not(.intro) .pour {
+  display: none;
+}
+
+/* ── facade sign ── */
+.sign {
+  --sign-h: clamp(44px, 9vw, 64px);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  min-height: var(--sign-h);
+  padding: 0.35em 1.2em;
+  background: linear-gradient(180deg, #fbf7ef, var(--cream) 60%, #ece3d2);
+  border: 2px solid var(--gold);
+  outline: 1.5px solid var(--gold);
+  outline-offset: -7px;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.8) inset,
+    0 10px 24px -14px rgba(20, 20, 20, 0.45);
+}
+.signText {
+  font-family: var(--font-caps);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: clamp(1.15rem, 0.7rem + 2.6vw, 2rem);
+  letter-spacing: 0.08em;
+  line-height: 1;
+  color: var(--gold-ink);
+  background: linear-gradient(180deg, #8a7135, #6f5a2a 55%, #8c7338);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  white-space: nowrap;
+}

@@ -1,3 +1,14 @@
+# Demos de cafés en Dublín · Workflowers
+
+Dos demos independientes en el mismo repo, cada una con su propio deploy:
+
+| Proyecto | Carpeta | Deploy (Railway, proyecto `perfect-mercy`) |
+| --- | --- | --- |
+| Fallow Speciality Coffee | [`web/`](web/) (más el kit en la raíz) | servicio `Dublin-proyect`, root `web` |
+| The Coffee Shot | [`coffee-shot/`](coffee-shot/) | servicio `the-coffee-shot`, root `coffee-shot/web` |
+
+---
+
 # Fallow Speciality Coffee · web + Fallow Club
 
 Demo concept para Fallow (Dublín): sitio público mobile-first, club de sellos en Apple/Google Wallet, PWA del barista y panel del dueño.
