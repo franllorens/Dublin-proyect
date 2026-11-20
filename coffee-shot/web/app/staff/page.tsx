@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { unstable_noStore as noStore } from "next/cache";
 import { clubLive } from "@/lib/mode";
 import { TENANT } from "@/lib/brand";
 import { StaffApp, type StaffMember } from "@/components/staff/StaffApp";
@@ -9,11 +10,12 @@ export const metadata: Metadata = {
   appleWebApp: { capable: true, title: "Coffee Shot Barista", statusBarStyle: "black-translucent" },
 };
 export const viewport: Viewport = { themeColor: "#141414" };
-export const dynamic = "force-dynamic";
 
 /** In live mode the barista picks their name; PINs are checked by /api/club/stamp. */
 async function staffList(): Promise<StaffMember[]> {
   if (!clubLive()) return [];
+  // Live: read the staff list per request. Demo: the page stays static (and exports to Pages).
+  noStore();
   try {
     const { db } = await import("@/src/lib/db");
     const { data } = await db()

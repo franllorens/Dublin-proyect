@@ -2,10 +2,10 @@
 
 Dos demos independientes en el mismo repo, cada una con su propio deploy:
 
-| Proyecto | Carpeta | Deploy (Railway, proyecto `perfect-mercy`) |
-| --- | --- | --- |
-| Fallow Speciality Coffee | [`web/`](web/) (más el kit en la raíz) | servicio `Dublin-proyect`, root `web` |
-| The Coffee Shot | [`coffee-shot/`](coffee-shot/) | servicio `the-coffee-shot`, root `coffee-shot/web` |
+| Proyecto | Carpeta | Deploy (Railway, proyecto `perfect-mercy`) | Cloudflare |
+| --- | --- | --- | --- |
+| Fallow Speciality Coffee | [`web/`](web/) (más el kit en la raíz) | servicio `Dublin-proyect`, root `web` | — |
+| The Coffee Shot | [`coffee-shot/`](coffee-shot/) | servicio `the-coffee-shot`, root `coffee-shot/web` | Worker `the-coffee-shot`: https://the-coffee-shot.fallow-web.workers.dev (sitio estático en modo demo) |
 
 Skills de Claude Code del repo: [`.claude/skills/design-taste-frontend`](.claude/skills/design-taste-frontend) ([taste-skill](https://github.com/Leonxlnx/taste-skill) 2.5.1, MIT). Se probó un rediseño de The Coffee Shot con ella (commit 9360d9e) y se descartó: el sitio volvió a la versión anterior.
 

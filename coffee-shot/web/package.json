@@ -6,6 +6,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:static": "STATIC_EXPORT=1 NEXT_PUBLIC_FORCE_DEMO=1 next build",
+    "deploy:cloudflare": "npm run build:static && NODE_USE_ENV_PROXY=1 node scripts/cloudflare/deploy.mjs",
     "start": "next start",
     "typecheck": "tsc --noEmit",
     "google:class": "tsx scripts/create-google-class.ts"
