@@ -10,6 +10,8 @@ Backend del club de sellos para Fallow, multi-tenant. Son route handlers de Next
 | `GET /api/club/pass/:serial?k=` | Primera descarga del `.pkpass` (el botón «Add to Apple Wallet») |
 | `POST /api/club/stamp` | Barista: suma un sello (PIN del staff, 10 minutos de espera entre sellos) y actualiza los dos Wallets |
 | `POST /api/club/redeem` | Barista: canjea el café gratis y la tarjeta vuelve a 0 |
+| `GET /api/club/staff?tenant=` | Lista de baristas por local (id, nombre, local) para la PWA del barista. Sin PINs |
+| `POST /api/feedback` | «Tell the team privately» del sitio. Necesita `supabase/feedback.sql` |
 | `/api/apple/v1/...` | PassKit Web Service: registro de iPhones, lista de cambios, descarga del pase actualizado y log |
 
 Los sellos se guardan como eventos (`stamp_events`). La tabla `passes` solo guarda el número para cachear.
@@ -50,6 +52,10 @@ Los sellos se guardan como eventos (`stamp_events`). La tabla `passes` solo guar
    curl -X POST $APP_BASE_URL/api/club/stamp -H 'content-type: application/json' -d '{"serial":"FLW-...","staffId":"...","pin":"1234"}'
    ```
    El pase se tiene que actualizar solo en el teléfono, en pocos segundos.
+
+## CORS
+
+El sitio es estático (Cloudflare Pages) y llama a esta API desde el navegador. `middleware.ts` permite los orígenes de `CORS_ORIGINS` (separados por comas), por ejemplo `https://fallow-coffee.pages.dev`.
 
 ## Pendiente para la siguiente iteración
 - **Imagen de tira con los sellos dibujados.** Hoy el contador es texto («4/9»); la tira necesita generar la imagen en el servidor.

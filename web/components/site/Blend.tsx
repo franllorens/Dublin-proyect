@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { AntlerPair } from "@/components/brand/Logo";
 import { BlendMotion } from "./BlendMotion";
-import photo from "@/assets/fallow-cup-terracotta-table.jpg";
+import photo from "@/assets/fallow-cup-terracotta-table.webp";
 import s from "./Blend.module.css";
 
 /** Two halves of one bean-shaped circle that close together as you scroll: 50/50. */

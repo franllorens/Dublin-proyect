@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { Wordmark } from "@/components/brand/Logo";
 import { LOCATIONS, shortName } from "@/lib/hours";
+import { api } from "@/lib/mode";
 import { RULES, demoRedeem, demoStamp, serverSnapshot, snapshot, subscribe, type DemoEvent } from "@/lib/demo-store";
 import s from "./Staff.module.css";
 
@@ -24,7 +25,8 @@ const isToday = (t: number) => new Date(t).toDateString() === new Date().toDateS
 
 type Detector = { detect: (v: HTMLVideoElement) => Promise<{ rawValue: string }[]> };
 
-export function StaffApp({ live, staff }: { live: boolean; staff: StaffMember[] }) {
+export function StaffApp({ live }: { live: boolean }) {
+  const [staff, setStaff] = useState<StaffMember[]>([]);
   const [loc, setLoc] = useState(LOCATIONS[0].slug);
   const [staffId, setStaffId] = useState("");
   const [pin, setPin] = useState("");
@@ -39,6 +41,15 @@ export function StaffApp({ live, staff }: { live: boolean; staff: StaffMember[] 
   const lastScan = useRef({ v: "", t: 0 });
 
   const store = useSyncExternalStore(subscribe, snapshot, serverSnapshot);
+
+  // live mode: baristas per location come from the wallet API
+  useEffect(() => {
+    if (!live) return;
+    fetch(api("/api/club/staff?tenant=fallow"))
+      .then((r) => (r.ok ? r.json() : []))
+      .then((list: StaffMember[]) => setStaff(Array.isArray(list) ? list : []))
+      .catch(() => setStaff([]));
+  }, [live]);
 
   // remember the hatch on this device
   useEffect(() => {
@@ -104,7 +115,7 @@ export function StaffApp({ live, staff }: { live: boolean; staff: StaffMember[] 
           show({ tone: "error", title: "Sign in first", detail: "Pick your name and type your PIN at the top." });
           return;
         }
-        const res = await fetch("/api/club/stamp", {
+        const res = await fetch(api("/api/club/stamp"), {
           method: "POST",
           headers: { "content-type": "application/json" },
           body: JSON.stringify({ serial, staffId, pin }),
@@ -137,7 +148,7 @@ export function StaffApp({ live, staff }: { live: boolean; staff: StaffMember[] 
         show(r.ok ? { tone: "ok", title: "Redeemed", detail: r.message } : { tone: "warn", title: "Nothing to redeem", detail: r.message });
         return;
       }
-      const res = await fetch("/api/club/redeem", {
+      const res = await fetch(api("/api/club/redeem"), {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({ serial, staffId, pin }),

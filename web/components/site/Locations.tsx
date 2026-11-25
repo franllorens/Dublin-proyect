@@ -2,7 +2,7 @@ import Image from "next/image";
 import { LOCATIONS, hoursLabel, mapsUrl, type Location } from "@/lib/hours";
 import { Pill, Week } from "./LocationStatus";
 import { MiniTrailer, Container } from "./Illustrations";
-import photo from "@/assets/fallow-cup-trailer-bizquip.jpg";
+import photo from "@/assets/fallow-cup-trailer-bizquip.webp";
 import s from "./Locations.module.css";
 
 function Hours({ loc }: { loc: Location }) {

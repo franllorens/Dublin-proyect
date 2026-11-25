@@ -3,6 +3,7 @@
 import { useId, useState } from "react";
 import { LOCATIONS, reviewUrl, shortName } from "@/lib/hours";
 import { demoLog } from "@/lib/demo-store";
+import { api } from "@/lib/mode";
 import s from "./Reviews.module.css";
 
 /**
@@ -24,7 +25,7 @@ export function Reviews({ live }: { live: boolean }) {
     demoLog({ t: Date.now(), type: "feedback", location: where });
     if (live) {
       try {
-        const r = await fetch("/api/feedback", {
+        const r = await fetch(api("/api/feedback"), {
           method: "POST",
           headers: { "content-type": "application/json" },
           body: JSON.stringify({ tenant: "fallow", location: where, message: msg }),

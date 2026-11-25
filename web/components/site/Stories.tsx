@@ -5,7 +5,7 @@ import Image from "next/image";
 import { AntlerPair } from "@/components/brand/Logo";
 import { StampSeal } from "@/components/club/Pass";
 import { reducedMotion } from "@/lib/motion";
-import photo from "@/assets/fallow-cup-trailer-bizquip.jpg";
+import photo from "@/assets/fallow-cup-trailer-bizquip.webp";
 import s from "./Stories.module.css";
 
 const STEPS = [

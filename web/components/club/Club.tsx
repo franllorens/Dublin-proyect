@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { api } from "@/lib/mode";
 import { demoJoin, demoRedeem, demoStamp } from "@/lib/demo-store";
 import { loadGsap, reducedMotion, whenNear } from "@/lib/motion";
 import { Phone, type PhoneHandle } from "./Phone";
@@ -39,7 +40,7 @@ export function Club({ live }: { live: boolean }) {
     let got: Links | null = null;
     if (live) {
       try {
-        const r = await fetch("/api/club/join", {
+        const r = await fetch(api("/api/club/join"), {
           method: "POST",
           headers: { "content-type": "application/json" },
           body: JSON.stringify({ tenant: "fallow", firstName: first }),

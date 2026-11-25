@@ -1,10 +1,13 @@
-import "server-only";
-
 /**
- * "live" when the wallet backend is configured; otherwise every club action runs as a
- * local simulation. NEXT_PUBLIC_FORCE_DEMO=1 forces demo mode even with env vars set.
+ * The site is a static export (Cloudflare Pages). Club actions go to the wallet API
+ * (backend/fallow-wallet, on Railway) when NEXT_PUBLIC_API_URL is set at build time;
+ * otherwise everything runs as a local simulation in the browser.
+ * NEXT_PUBLIC_FORCE_DEMO=1 forces demo mode even with the URL set.
  */
+export const API_URL = (process.env.NEXT_PUBLIC_API_URL ?? "").replace(/\/$/, "");
+
 export function clubLive() {
-  if (process.env.NEXT_PUBLIC_FORCE_DEMO === "1") return false;
-  return Boolean(process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY && process.env.APP_BASE_URL);
+  return Boolean(API_URL) && process.env.NEXT_PUBLIC_FORCE_DEMO !== "1";
 }
+
+export const api = (path: string) => `${API_URL}${path}`;

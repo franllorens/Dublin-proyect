@@ -1,6 +1,6 @@
 # Fallow Speciality Coffee: sitio + Fallow Club
 
-Demo para presentarle a Fallow (Dublín). Es un proyecto Next.js 14 (App Router, TypeScript) que **ya incluye el backend** de `backend/fallow-wallet`: las rutas `/api/club/*` y `/api/apple/v1/*` están copiadas tal cual en `app/api`, y `src/lib`, `models/` y `supabase/` también. Un solo `npm run dev` levanta el sitio, la app del barista, el panel del dueño y la API.
+Demo para presentarle a Fallow (Dublín). Next.js 14 (App Router, TypeScript) exportado como **sitio estático para Cloudflare Pages**. La API de Wallet (Apple/Google) vive aparte, en `../backend/fallow-wallet`, pensada para Railway.
 
 | Ruta | Qué es |
 | --- | --- |
@@ -16,7 +16,7 @@ npm install
 npm run dev
 ```
 
-Abrí http://localhost:3000. Sin variables de entorno todo el club corre **simulado en el navegador** (`localStorage` + `BroadcastChannel`, `lib/demo-store.ts`), con las mismas reglas que el backend: 9 sellos, sello de bienvenida, 10 minutos entre escaneos y un sello por story por semana. Lo que hagas en una vista aparece en las otras:
+Abrí http://localhost:3000. Sin `NEXT_PUBLIC_API_URL` todo el club corre **simulado en el navegador** (`localStorage` + `BroadcastChannel`, `lib/demo-store.ts`), con las mismas reglas que el backend: 9 sellos, sello de bienvenida, 10 minutos entre escaneos y un sello por story por semana. Lo que hagas en una vista aparece en las otras:
 
 1. En `/`, sección *Fallow Club*: poné un nombre y tocá **Add to Apple Wallet**. La tarjeta entra al Wallet con resorte y aparece la pantalla de bloqueo. Después **Be the barista** estampa los sellos.
 2. En `/staff` aparecen esa tarjeta y tres tarjetas de ejemplo. Tocá una para «escanearla»; si la volvés a tocar, se bloquea en naranja por el doble escaneo.
@@ -28,20 +28,28 @@ Abrí http://localhost:3000. Sin variables de entorno todo el club corre **simul
 - `/?at=sun-11:00`: solo Kilternan (fin de semana).
 - `/?at=wed-19:30`: cerrado, con el cartel «BACK TMRW 07:00».
 
-## Modo real (Apple Wallet + Google Wallet + Supabase)
+## Publicar en Cloudflare Pages
 
-1. Seguí `../backend/fallow-wallet/README.md`: proyecto de Supabase, Pass Type ID de Apple, issuer de Google y el script de la clase.
-2. En Supabase corré `supabase/schema.sql` y además **`supabase/feedback.sql`**, la tabla nueva para «Tell the team privately».
-3. Copiá `.env.example` a `.env.local` y completalo. El sitio pasa a modo real cuando existen `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` y `APP_BASE_URL` (`lib/mode.ts`). `NEXT_PUBLIC_FORCE_DEMO=1` vuelve a demo aunque estén cargadas.
-4. `npm run build && npm start`, o deploy en Vercel. Apple exige HTTPS en `APP_BASE_URL`.
+`npm run build` genera `out/`, que es lo que se sube al proyecto de Pages **`fallow-coffee`** (https://fallow-coffee.pages.dev). Hay tres formas:
+
+1. **Automática con GitHub Actions** (`.github/workflows/deploy-pages.yml`): cada push a `main` que toque `web/` compila y despliega. En GitHub, *Settings → Secrets and variables → Actions*, cargá los secretos `CLOUDFLARE_API_TOKEN` (con permiso *Cloudflare Pages: Edit*) y `CLOUDFLARE_ACCOUNT_ID`. Opcional: la variable `NEXT_PUBLIC_API_URL`.
+2. **Desde tu máquina:** `npm run deploy`, con `CLOUDFLARE_API_TOKEN` y `CLOUDFLARE_ACCOUNT_ID` en el entorno.
+3. **A mano:** en el panel de Cloudflare, *Workers & Pages → fallow-coffee → Create deployment*, y arrastrás la carpeta `out/` o su zip.
+
+`public/_headers` define la caché de `/_next/static` y `noindex`. Las fotos de `assets/` están pre-redimensionadas a WebP (960 y 640 px), porque Pages no optimiza imágenes. Los originales están en `../assets/`.
+
+## Modo real (Apple Wallet + Google Wallet)
+
+1. Desplegá `../backend/fallow-wallet` (en Railway) siguiendo su README, incluida `supabase/feedback.sql`. En el backend, `CORS_ORIGINS` tiene que incluir la URL del sitio, por ejemplo `https://fallow-coffee.pages.dev`.
+2. Compilá el sitio con `NEXT_PUBLIC_API_URL=https://<tu-api>.up.railway.app` (`lib/mode.ts`). `NEXT_PUBLIC_FORCE_DEMO=1` vuelve a demo aunque esté cargada.
 
 Qué cambia en modo real:
 
-- **Add to Apple / Google Wallet** llama a `POST /api/club/join`. En iPhone abre el `.pkpass`, en Android el link de Google, y en desktop muestra los dos links. Si el servidor falla, cae a demo y lo avisa.
-- **`/staff`** lista a los baristas de cada local (tabla `staff`, leída en el servidor) y pide el PIN, que vive en `sessionStorage`. Escaneo y canje pegan contra `POST /api/club/stamp` y `/api/club/redeem`.
-- **Reseñas privadas** van a `POST /api/feedback`, una ruta nueva que guarda en `feedback`.
+- **Add to Apple / Google Wallet** llama a `POST {API}/api/club/join`. En iPhone abre el `.pkpass`, en Android el link de Google, y en desktop muestra los dos links. Si la API falla, cae a demo y lo avisa.
+- **`/staff`** pide la lista de baristas a `GET {API}/api/club/staff` y el PIN, que vive en `sessionStorage`. Escaneo y canje pegan contra `POST {API}/api/club/stamp` y `/api/club/redeem`.
+- **Reseñas privadas** van a `POST {API}/api/feedback`.
 - **Be the barista** sigue siendo una simulación en el mockup: los sellos reales solo salen del escáner.
-- **`/owner`** sigue con datos de ejemplo. Conectarlo a `stamp_events` / `redemptions` es el paso siguiente.
+- **`/owner`** sigue con datos de ejemplo. Conectarlo a la base es el paso siguiente.
 
 ## Decisiones de diseño
 
@@ -70,7 +78,9 @@ Qué cambia en modo real:
 | `/staff` | 99 | 100 | 100 |
 | `/owner` | 99 | 100 | 100 |
 
-SEO da 60–63 solo por el `noindex` intencional de la demo. Para producción hay que sacar `robots` de `app/layout.tsx`.
+SEO da 60–63 solo por el `noindex` intencional de la demo. Para producción hay que sacar `robots` de `app/layout.tsx` y el `X-Robots-Tag` de `public/_headers`.
+
+Medido sobre el build con servidor de Next; el export estático sirve los mismos archivos.
 
 ## Pendiente / a confirmar con Fallow
 
@@ -88,10 +98,10 @@ SEO da 60–63 solo por el `noindex` intencional de la demo. Para producción ha
 
 ```
 web/
-  app/            page.tsx (sitio), staff/, owner/, api/ (backend + feedback), fonts/
+  app/            page.tsx (sitio), staff/, owner/, fonts/
   components/     brand/ (logo), site/ (secciones), club/ (Wallet + pase), staff/, owner/
   lib/            hours.ts (hora de Dublín), demo-store.ts, motion.ts, mode.ts, qr.ts, sample.ts
   data/           copia de ../data (precios, locales, marca)
-  assets/         fotos placeholder
-  src/lib, models/, supabase/, scripts/   backend fallow-wallet
+  assets/         fotos placeholder en WebP
+  public/         íconos, manifest y service worker del barista, _headers de Pages
 ```

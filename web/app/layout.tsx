@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   title: "Fallow Speciality Coffee · Sandyford & Kilternan",
   description:
     "Speciality coffee to go from two vintage trailers in Sandyford Business Park and a drive-thru in Kilternan. Our own Fallow Blend, roasted by Full Circle Roasters.",
-  metadataBase: new URL(process.env.APP_BASE_URL || "http://localhost:3000"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://fallow-coffee.pages.dev"),
   icons: { icon: "/icon.svg", apple: "/apple-touch-icon.png" },
   robots: { index: false, follow: false }, // concept demo
 };
