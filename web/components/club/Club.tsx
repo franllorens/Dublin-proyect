@@ -15,6 +15,7 @@ const ua = () => (typeof navigator === "undefined" ? "" : navigator.userAgent);
 const isIOS = () => /iPhone|iPad|iPod/.test(ua()) || (ua().includes("Mac") && "ontouchend" in document);
 const isAndroid = () => /Android/.test(ua());
 const cardOf = (c: DemoCard) => ({ name: c.name, stamps: c.stamps, reward: c.reward });
+const SAVED = "fallow-club-card";
 
 export function Club({ live }: { live: boolean }) {
   const phone = useRef<PhoneHandle>(null);
@@ -32,6 +33,28 @@ export function Club({ live }: { live: boolean }) {
 
   const showPhone = () =>
     phone.current?.el?.scrollIntoView({ block: "nearest", behavior: reducedMotion() ? "auto" : "smooth" });
+
+  // Keep the card on the phone across reloads (iOS reloads tabs left in the background).
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem(SAVED);
+      if (!raw) return;
+      const saved = JSON.parse(raw) as { pass: PassData; demo: boolean };
+      const c = saved.demo ? snapshot().cards[saved.pass.serial] : null;
+      if (saved.demo && !c) return localStorage.removeItem(SAVED);
+      setIsDemo(saved.demo);
+      setPass(c ? { ...saved.pass, stamps: c.stamps, reward: c.reward } : saved.pass);
+    } catch {
+      /* ignore */
+    }
+  }, []);
+  useEffect(() => {
+    try {
+      if (pass) localStorage.setItem(SAVED, JSON.stringify({ pass, demo: isDemo }));
+    } catch {
+      /* ignore */
+    }
+  }, [pass, isDemo]);
 
   // Demo: stamps can also come from the barista view (another tab, or another phone through
   // the relay). Whenever this card changes outside the button, play the same stamp on the phone.
@@ -142,6 +165,11 @@ export function Club({ live }: { live: boolean }) {
   }
 
   function reset() {
+    try {
+      localStorage.removeItem(SAVED);
+    } catch {
+      /* ignore */
+    }
     setPass(null);
     setLinks(null);
     setSaid("Card removed from the preview.");
