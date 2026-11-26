@@ -30,12 +30,16 @@ Abrí http://localhost:3000. Sin `NEXT_PUBLIC_API_URL` todo el club corre **simu
 - `/?at=sun-11:00`: solo Kilternan (fin de semana).
 - `/?at=wed-19:30`: cerrado, con el cartel «BACK TMRW 07:00».
 
+## Publicar en Railway (rama `main`)
+
+El servicio **Dublin-proyect** del proyecto `perfect-mercy` en Railway despliega `web/` desde la rama `main` en cada push: https://dublin-proyect-production.up.railway.app. Railpack corre `npm run build`, que genera `out/`, y después `npm start`, que sirve esa carpeta con `serve` en `$PORT` (8080 por defecto). Para el modo real, cargá `NEXT_PUBLIC_API_URL` en las variables del servicio y volvé a desplegar.
+
 ## Publicar en Cloudflare Pages
 
 `npm run build` genera `out/`, que es lo que se sube al proyecto de Pages **`fallow-coffee`** (https://fallow-coffee.pages.dev). Hay tres formas:
 
-1. **Automática con GitHub Actions** (`.github/workflows/deploy-pages.yml`): cada push a `main` que toque `web/` compila y despliega. En GitHub, *Settings → Secrets and variables → Actions*, cargá los secretos `CLOUDFLARE_API_TOKEN` (con permiso *Cloudflare Pages: Edit*) y `CLOUDFLARE_ACCOUNT_ID`. Opcional: la variable `NEXT_PUBLIC_API_URL`.
-2. **Desde tu máquina:** `npm run deploy`, con `CLOUDFLARE_API_TOKEN` y `CLOUDFLARE_ACCOUNT_ID` en el entorno.
+1. **Automática con GitHub Actions** (`.github/workflows/deploy-pages.yml`): cada push a `main` que toque `web/` compila y despliega. Mientras no estén cargados los secretos, el workflow se saltea sin fallar. En GitHub, *Settings → Secrets and variables → Actions*, cargá los secretos `CLOUDFLARE_API_TOKEN` (con permiso *Cloudflare Pages: Edit*) y `CLOUDFLARE_ACCOUNT_ID`. Opcional: la variable `NEXT_PUBLIC_API_URL`.
+2. **Desde tu máquina:** `npm run deploy:pages`, con `CLOUDFLARE_API_TOKEN` y `CLOUDFLARE_ACCOUNT_ID` en el entorno.
 3. **A mano:** en el panel de Cloudflare, *Workers & Pages → fallow-coffee → Create deployment*, y arrastrás la carpeta `out/` o su zip.
 
 `public/_headers` define la caché de `/_next/static` y `noindex`. Las fotos de `assets/` están pre-redimensionadas a WebP (960 y 640 px), porque Pages no optimiza imágenes. Los originales están en `../assets/`.

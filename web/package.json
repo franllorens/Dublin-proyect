@@ -6,9 +6,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "preview": "npx serve@14.2.7 out",
+    "start": "serve out --no-clipboard -l tcp://0.0.0.0:${PORT:-8080}",
+    "preview": "serve out -l 3000",
     "typecheck": "tsc --noEmit",
-    "deploy": "npm run build && npx wrangler@4.159.0 pages deploy out --project-name fallow-coffee --branch main"
+    "deploy:pages": "npm run build && npx wrangler@4.159.0 pages deploy out --project-name fallow-coffee --branch main"
   },
   "dependencies": {
     "@zxing/browser": "0.2.1",
@@ -18,12 +19,16 @@
     "next": "14.2.35",
     "qrcode-generator": "2.0.4",
     "react": "18.3.1",
-    "react-dom": "18.3.1"
+    "react-dom": "18.3.1",
+    "serve": "14.2.7"
   },
   "devDependencies": {
     "@types/node": "20.17.6",
     "@types/react": "18.3.12",
     "@types/react-dom": "18.3.1",
     "typescript": "5.6.3"
+  },
+  "engines": {
+    "node": ">=20"
   }
 }
