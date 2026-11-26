@@ -166,3 +166,14 @@
     align-self: center;
   }
 }
+
+.tip {
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--pink-pale);
+  font-size: 0.92rem;
+}
+.tip a {
+  color: var(--forest);
+  font-weight: 700;
+}

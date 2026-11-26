@@ -116,7 +116,7 @@
   justify-items: center;
   gap: 3px;
   margin-top: 4px;
-  padding: 8px 8px 5px;
+  padding: 4px 4px 5px;
   background: #fff;
   border-radius: 6px;
   color: #333;
@@ -124,7 +124,7 @@
   letter-spacing: 0.04em;
 }
 .qr {
-  width: max(70px, 30cqi);
+  width: max(88px, 36cqi);
   height: auto;
 }
 .pass[data-reward="true"] .strip {

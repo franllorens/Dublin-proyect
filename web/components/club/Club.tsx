@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useSyncExternalStore } from "react";
 import { api } from "@/lib/mode";
-import { demoJoin, demoRedeem, demoStamp } from "@/lib/demo-store";
+import { demoJoin, demoRedeem, demoStamp, serverSnapshot, snapshot, subscribe, type DemoCard } from "@/lib/demo-store";
+import { listenForCard, type RelayResult } from "@/lib/relay";
 import { loadGsap, reducedMotion, whenNear } from "@/lib/motion";
 import { Phone, type PhoneHandle } from "./Phone";
 import { GOAL, type PassData } from "./Pass";
@@ -13,6 +14,7 @@ const frame = () => new Promise((r) => requestAnimationFrame(() => requestAnimat
 const ua = () => (typeof navigator === "undefined" ? "" : navigator.userAgent);
 const isIOS = () => /iPhone|iPad|iPod/.test(ua()) || (ua().includes("Mac") && "ontouchend" in document);
 const isAndroid = () => /Android/.test(ua());
+const cardOf = (c: DemoCard) => ({ name: c.name, stamps: c.stamps, reward: c.reward });
 
 export function Club({ live }: { live: boolean }) {
   const phone = useRef<PhoneHandle>(null);
@@ -30,6 +32,42 @@ export function Club({ live }: { live: boolean }) {
 
   const showPhone = () =>
     phone.current?.el?.scrollIntoView({ block: "nearest", behavior: reducedMotion() ? "auto" : "smooth" });
+
+  // Demo: stamps can also come from the barista view (another tab, or another phone through
+  // the relay). Whenever this card changes outside the button, play the same stamp on the phone.
+  const store = useSyncExternalStore(subscribe, snapshot, serverSnapshot);
+  useEffect(() => {
+    if (!pass || !isDemo) return;
+    const c = store.cards[pass.serial];
+    if (!c || (c.stamps === pass.stamps && c.reward === pass.reward)) return;
+    const before = pass.stamps;
+    setPass({ ...pass, stamps: c.stamps, reward: c.reward });
+    void (async () => {
+      await frame();
+      showPhone();
+      if (c.stamps > before) {
+        await phone.current?.stamp(c.stamps - 1);
+        phone.current?.notify("Fallow Club", `Your Fallow card: ${c.reward ? "FREE" : `${c.stamps}/${GOAL}`}`);
+        setSaid(c.reward ? `The barista stamped it: ${GOAL} of ${GOAL}, free coffee ready.` : `The barista stamped it: ${c.stamps} of ${GOAL}.`);
+      } else {
+        phone.current?.notify("Fallow Club", `Your Fallow card: ${c.stamps}/${GOAL}`);
+        setSaid("Free coffee redeemed at the hatch. The card starts again.");
+      }
+    })();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [store, isDemo]);
+
+  // Demo: answer scans from a barista on another phone (server.mjs relays them).
+  const serial = pass?.serial;
+  useEffect(() => {
+    if (!serial || !isDemo) return;
+    return listenForCard(serial, (action, location): RelayResult => {
+      const r = action === "redeem" ? demoRedeem(serial, location) : demoStamp(serial, { force: true, location });
+      return r.ok
+        ? { ok: true, card: cardOf(r.card), message: r.message }
+        : { ok: false, reason: r.reason, message: r.message, card: r.card ? cardOf(r.card) : undefined };
+    });
+  }, [serial, isDemo]);
 
   async function join(kind: "apple" | "google") {
     if (busy) return;
@@ -215,6 +253,15 @@ export function Club({ live }: { live: boolean }) {
                       <a href={links.google}>Save to Google Wallet</a>
                     </>
                   )}
+                </p>
+              )}
+              {isDemo && (
+                <p className={s.tip}>
+                  <b>Try it with two phones.</b> Open the{" "}
+                  <a href="/staff" target="_blank" rel="noopener">
+                    barista view<span className="sr-only"> (opens in a new tab)</span>
+                  </a>{" "}
+                  on another phone and scan this card&rsquo;s QR. The stamp lands here.
                 </p>
               )}
               <button type="button" className={s.reset} onClick={reset}>

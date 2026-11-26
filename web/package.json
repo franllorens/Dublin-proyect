@@ -6,8 +6,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "serve out --no-clipboard -l tcp://0.0.0.0:${PORT:-8080}",
-    "preview": "serve out -l 3000",
+    "start": "node server.mjs",
+    "preview": "PORT=3000 node server.mjs",
     "typecheck": "tsc --noEmit",
     "deploy:pages": "npm run build && npx wrangler@4.159.0 pages deploy out --project-name fallow-coffee --branch main"
   },
@@ -20,7 +20,7 @@
     "qrcode-generator": "2.0.4",
     "react": "18.3.1",
     "react-dom": "18.3.1",
-    "serve": "14.2.7"
+    "serve-handler": "6.1.8"
   },
   "devDependencies": {
     "@types/node": "20.17.6",

@@ -22,6 +22,8 @@ Abrí http://localhost:3000. Sin `NEXT_PUBLIC_API_URL` todo el club corre **simu
 2. En `/staff` aparecen esa tarjeta y tres tarjetas de ejemplo. Tocá una para «escanearla»; si la volvés a tocar, se bloquea en naranja por el doble escaneo.
 3. En `/owner` los KPIs suman lo que hiciste (`+n live`).
 
+**Con dos teléfonos (lo mejor para presentar).** En el teléfono del cliente abrí el sitio y creá la tarjeta en *Fallow Club*. En otro teléfono abrí `/staff`, tocá *Scan a card* y apuntá al QR de la tarjeta. El sello llega al primer teléfono con la misma animación y notificación que «Be the barista», y el barista ve el resultado grande sobre la cámara. La misma tarjeta vuelve a contar recién cuando sale del cuadro y se la muestra otra vez. Las tarjetas creadas en el sitio no tienen el bloqueo de 10 minutos, así se puede llegar al café gratis en la demo. Las tarjetas de ejemplo (Aoife, Conor, Niamh) sí lo tienen, para mostrar la protección contra el doble escaneo. Esto funciona porque `server.mjs`, en Railway, pasa los sellos de un teléfono al otro (ver abajo).
+
 **Order ahead** (sección justo después del hero): el oficinista elige el local, el café (precios exactos del tablero, frío o caliente, leche, shot, syrup) y algo de la vitrina, que va «priced at the hatch» porque no hay precios publicados. Después elige la hora y su nombre y envía el pedido. Paga en la ventanilla. En demo, abrí `/staff` en otra pestaña, elegí el mismo local y vas a ver entrar el ticket (por ejemplo «N-01»). Cada botón del barista («Start making» → «On the counter» → «Collected») actualiza en vivo el ticket del cliente. Si nadie lo toca, el demo avanza solo en unos segundos.
 
 **Probar el hero a cualquier hora.** La compuerta del trailer se abre solo si hay algún local abierto según la hora de Dublín. Para mostrarlo fuera de horario:
@@ -32,7 +34,7 @@ Abrí http://localhost:3000. Sin `NEXT_PUBLIC_API_URL` todo el club corre **simu
 
 ## Publicar en Railway (rama `main`)
 
-El servicio **Dublin-proyect** del proyecto `perfect-mercy` en Railway despliega `web/` desde la rama `main` en cada push: https://dublin-proyect-production.up.railway.app. Railpack corre `npm run build`, que genera `out/`, y después `npm start`, que sirve esa carpeta con `serve` en `$PORT` (8080 por defecto). Para el modo real, cargá `NEXT_PUBLIC_API_URL` en las variables del servicio y volvé a desplegar.
+El servicio **Dublin-proyect** del proyecto `perfect-mercy` en Railway despliega `web/` desde la rama `main` en cada push: https://dublin-proyect-production.up.railway.app. Railpack corre `npm run build`, que genera `out/`, y después `npm start` (`node server.mjs`). Ese servidor sirve la carpeta en `$PORT` (8080 por defecto) y además hace de puente del demo entre teléfonos (`/api/demo/listen`, `/api/demo/request` y `/api/demo/respond`): guarda todo en memoria, no persiste nada y se reinicia con cada deploy. En Cloudflare Pages no hay puente, así que ahí el escaneo entre teléfonos no funciona; en el mismo navegador, sí. Para el modo real, cargá `NEXT_PUBLIC_API_URL` en las variables del servicio y volvé a desplegar.
 
 ## Publicar en Cloudflare Pages
 

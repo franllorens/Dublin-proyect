@@ -11,7 +11,16 @@ import { prefixFor, type Order, type OrderStatus } from "./order";
 export const RULES = { goal: 9, welcome: 1, cooldownMinutes: 10, storyPerWeek: 1 };
 
 export type Source = "scan" | "welcome" | "story";
-export type DemoCard = { serial: string; name: string; stamps: number; reward: boolean; lastStampAt: number | null; example?: boolean };
+export type DemoCard = {
+  serial: string;
+  name: string;
+  stamps: number;
+  reward: boolean;
+  lastStampAt: number | null;
+  example?: boolean;
+  /** a copy of a card that lives on another phone (stamped through the relay) */
+  remote?: boolean;
+};
 export type DemoEvent =
   | { t: number; type: "join"; serial: string; name: string }
   | { t: number; type: "stamp"; serial: string; name: string; source: Source; location: string | null; stamps: number }
@@ -170,6 +179,18 @@ export function demoRedeem(serial: string, location: string | null = null): Stam
   s.events.push({ t: Date.now(), type: "redeem", serial, name: c.name, location });
   save(s);
   return { ok: true, card: c, message: `Redeemed. ${c.name}'s card starts again.` };
+}
+
+/** Barista side of the relay: mirror a card that lives on another phone, so the feed and the owner KPIs see it. */
+export function demoMirror(card: { serial: string; name: string; stamps: number; reward: boolean }, action: "stamp" | "redeem", location: string | null) {
+  const s = structuredClone(load());
+  s.cards[card.serial] = { ...card, lastStampAt: null, remote: true };
+  s.events.push(
+    action === "stamp"
+      ? { t: Date.now(), type: "stamp", serial: card.serial, name: card.name, source: "scan", location, stamps: card.stamps }
+      : { t: Date.now(), type: "redeem", serial: card.serial, name: card.name, location },
+  );
+  save(s);
 }
 
 export function demoLog(e: Extract<DemoEvent, { type: "review_tap" | "feedback" }>) {

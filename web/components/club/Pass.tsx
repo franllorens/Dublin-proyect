@@ -77,8 +77,8 @@ export const Pass = forwardRef<HTMLDivElement, { data: PassData; className?: str
         </div>
       </div>
       <div className={s.qrBox}>
-        <svg viewBox={`-2 -2 ${qr.size + 4} ${qr.size + 4}`} className={s.qr} aria-hidden="true">
-          <rect x="-2" y="-2" width={qr.size + 4} height={qr.size + 4} fill="#fff" />
+        <svg viewBox={`-4 -4 ${qr.size + 8} ${qr.size + 8}`} className={s.qr} aria-hidden="true">
+          <rect x="-4" y="-4" width={qr.size + 8} height={qr.size + 8} fill="#fff" />
           <path d={qr.d} fill="#111" shapeRendering="crispEdges" />
         </svg>
         <span>{data.serial}</span>

@@ -5,20 +5,24 @@ import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "
 import { Wordmark } from "@/components/brand/Logo";
 import { LOCATIONS, shortName } from "@/lib/hours";
 import { api } from "@/lib/mode";
-import { RULES, demoRedeem, demoStamp, serverSnapshot, snapshot, subscribe, type DemoEvent } from "@/lib/demo-store";
+import { RULES, demoMirror, demoRedeem, demoStamp, serverSnapshot, snapshot, subscribe, type DemoEvent } from "@/lib/demo-store";
+import { requestCard } from "@/lib/relay";
 import { OrdersQueue } from "./OrdersQueue";
 import s from "./Staff.module.css";
 
 export type StaffMember = { id: string; name: string; location: string };
 
 type Result = {
-  tone: "ok" | "reward" | "warn" | "error";
+  tone: "ok" | "reward" | "warn" | "error" | "wait";
   title: string;
   detail: string;
   serial?: string;
   canRedeem?: boolean;
 };
 type FeedItem = { t: number; text: string; tone: Result["tone"] };
+type Outcome =
+  | { ok: true; card: { name: string; stamps: number; reward: boolean }; message: string }
+  | { ok: false; reason: string; message: string };
 
 const fmtTime = (t: number) =>
   new Intl.DateTimeFormat("en-IE", { timeZone: "Europe/Dublin", hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).format(t);
@@ -39,7 +43,7 @@ export function StaffApp({ live }: { live: boolean }) {
   const [liveFeed, setLiveFeed] = useState<FeedItem[]>([]);
   const video = useRef<HTMLVideoElement>(null);
   const stopScan = useRef<() => void>(() => {});
-  const lastScan = useRef({ v: "", t: 0 });
+  const lastScan = useRef({ v: "", seen: 0 });
 
   const store = useSyncExternalStore(subscribe, snapshot, serverSnapshot);
 
@@ -76,8 +80,14 @@ export function StaffApp({ live }: { live: boolean }) {
     setStaffId((cur) => (here.some((m) => m.id === cur) ? cur : here[0]?.id ?? ""));
   }, [loc, staff]);
 
+  const [flash, setFlash] = useState<Pick<Result, "tone" | "title"> | null>(null);
+  const flashTimer = useRef<number>();
   const show = useCallback((r: Result) => {
     setResult(r);
+    // big answer on top of the camera too, so the barista never has to look away
+    setFlash({ tone: r.tone, title: r.title });
+    window.clearTimeout(flashTimer.current);
+    flashTimer.current = window.setTimeout(() => setFlash(null), 3000);
     try {
       navigator.vibrate?.(r.tone === "ok" || r.tone === "reward" ? 70 : [50, 60, 50]);
     } catch {
@@ -93,7 +103,29 @@ export function StaffApp({ live }: { live: boolean }) {
       setBusy(true);
       try {
         if (!live) {
-          const r = demoStamp(serial, { location: loc });
+          // Demo. A card made in this browser stamps here, like the site's "Be the barista" button
+          // (example cards keep the 10-minute rule to show double-scan protection). A card that
+          // lives on another phone goes through the relay, and that phone plays the stamp.
+          const local = snapshot().cards[serial];
+          let r: Outcome;
+          if (local && !local.remote) {
+            r = demoStamp(serial, { location: loc, force: !local.example });
+          } else {
+            setResult({ tone: "wait", title: "Sending to the card…", detail: "The stamp lands on the customer's phone." });
+            const rr = await requestCard(serial, "stamp", loc);
+            if (rr === "offline") {
+              show({
+                tone: "error",
+                title: local ? "Card isn't open" : "Not a club card",
+                detail: local
+                  ? `Ask ${local.name} to open the card on the site, then scan again.`
+                  : "If it's a card from the site, keep it open on that phone and scan again.",
+              });
+              return;
+            }
+            if (rr.ok) demoMirror({ serial, ...rr.card }, "stamp", loc);
+            r = rr;
+          }
           if (r.ok) {
             show({
               tone: r.card.reward ? "reward" : "ok",
@@ -145,7 +177,18 @@ export function StaffApp({ live }: { live: boolean }) {
     setBusy(true);
     try {
       if (!live) {
-        const r = demoRedeem(serial, loc);
+        const local = snapshot().cards[serial];
+        let r: Outcome;
+        if (local && !local.remote) r = demoRedeem(serial, loc);
+        else {
+          const rr = await requestCard(serial, "redeem", loc);
+          if (rr === "offline") {
+            show({ tone: "error", title: "Card isn't open", detail: "Ask them to open the card on the site, then try again." });
+            return;
+          }
+          if (rr.ok) demoMirror({ serial, ...rr.card }, "redeem", loc);
+          r = rr;
+        }
         show(r.ok ? { tone: "ok", title: "Redeemed", detail: r.message } : { tone: "warn", title: "Nothing to redeem", detail: r.message });
         return;
       }
@@ -168,8 +211,15 @@ export function StaffApp({ live }: { live: boolean }) {
   const onCode = useCallback(
     (v: string) => {
       const now = Date.now();
-      if (v === lastScan.current.v && now - lastScan.current.t < 4000) return; // same card held up
-      lastScan.current = { v, t: now };
+      // One scan per showing: the same card counts again only after it has left the frame
+      // for a moment (pulled back and shown again), never just for being held up.
+      const last = lastScan.current;
+      if (v === last.v) {
+        const away = now - last.seen > 1500;
+        last.seen = now;
+        if (!away) return;
+      }
+      lastScan.current = { v, seen: now };
       void handle(v);
     },
     [handle],
@@ -181,7 +231,10 @@ export function StaffApp({ live }: { live: boolean }) {
     setCam("starting");
     setCamMsg("");
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" }, audio: false });
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: "environment", width: { ideal: 1280 }, height: { ideal: 720 } },
+        audio: false,
+      });
       const v = video.current!;
       v.srcObject = stream;
       await v.play();
@@ -333,9 +386,16 @@ export function StaffApp({ live }: { live: boolean }) {
               {camMsg && <p className={s.camMsg}>{camMsg}</p>}
             </div>
           ) : (
-            <button type="button" className={s.stop} onClick={stopCamera}>
+            <>
+              {flash && (
+                <div className={s.flash} data-tone={flash.tone} aria-hidden="true">
+                  {flash.title}
+                </div>
+              )}
+              <button type="button" className={s.stop} onClick={stopCamera}>
               Stop camera
             </button>
+            </>
           )}
         </section>
 
