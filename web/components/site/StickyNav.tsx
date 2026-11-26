@@ -21,8 +21,8 @@ export function StickyNav() {
           <Wordmark className={s.mark} title="Fallow, back to top" />
         </a>
         <div className={s.links}>
-          <a href="#find-us" tabIndex={show ? 0 : -1}>
-            Find us
+          <a href="#order" tabIndex={show ? 0 : -1}>
+            Order
           </a>
           <a href="#menu" tabIndex={show ? 0 : -1}>
             Menu

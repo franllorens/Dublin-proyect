@@ -9,6 +9,7 @@ export function Hero() {
       <nav className={`wrap ${s.topbar}`} aria-label="Sections">
         <p>Sandyford Business Park · Kilternan</p>
         <div className={s.topnav}>
+          <a href="#order">Order ahead</a>
           <a href="#find-us">Find us</a>
           <a href="#menu">Menu</a>
           <a href="#blend">The blend</a>
@@ -24,11 +25,11 @@ export function Hero() {
             Speciality coffee to go, from two vintage trailers in Sandyford Business Park and a drive-thru in Kilternan.
           </p>
           <div className={s.ctas}>
-            <a className="btn btn--pink" href="#menu">
-              See the board
+            <a className="btn btn--pink" href="#order">
+              Order ahead
             </a>
             <a className={`btn btn--ghost ${s.ghost}`} href="#club">
-              Join Fallow Club
+              Join the club
             </a>
           </div>
         </div>

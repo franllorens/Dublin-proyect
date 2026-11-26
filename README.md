@@ -4,7 +4,7 @@ Demo concept para Fallow (Dublín): sitio público mobile-first, club de sellos 
 
 | Carpeta | Qué hay |
 | --- | --- |
-| [`web/`](web/) | **El sitio** (Next.js 14 + TypeScript, export estático para Cloudflare Pages): sitio público, `/staff` y `/owner`. Ver [`web/README.md`](web/README.md) |
+| [`web/`](web/) | **El sitio** (Next.js 14 + TypeScript, export estático para Cloudflare Pages): sitio público con pedido anticipado, `/staff` y `/owner`. Ver [`web/README.md`](web/README.md) |
 | [`screenshots/`](screenshots/) | Capturas finales (sitio, `/staff`, `/owner` en mobile y desktop) y reportes de Lighthouse |
 | `backend/fallow-wallet/` | **La API** de Apple/Google Wallet (Next.js route handlers), pensada para Railway |
 | `data/`, `assets/`, `reference/` | Kit de marca: datos verificados, fotos placeholder, dossier y demo anterior |

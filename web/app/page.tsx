@@ -1,6 +1,7 @@
 import { ClockProvider } from "@/components/site/Clock";
 import { Hero } from "@/components/site/Hero";
 import { StickyNav } from "@/components/site/StickyNav";
+import { OrderAhead } from "@/components/order/OrderAhead";
 import { Locations } from "@/components/site/Locations";
 import { MenuBoard } from "@/components/site/MenuBoard";
 import { Blend } from "@/components/site/Blend";
@@ -22,6 +23,7 @@ export default function Home() {
       <StickyNav />
       <Hero />
       <main id="main">
+        <OrderAhead />
         <Locations />
         <MenuBoard />
         <Blend />

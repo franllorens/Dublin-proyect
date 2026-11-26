@@ -358,3 +358,113 @@
   font-size: 0.85rem;
   color: var(--on-dark-soft);
 }
+
+/* order-ahead queue */
+.orders {
+  display: grid;
+  gap: 10px;
+}
+.orders h2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 1.3rem;
+}
+.orders h2 span {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--pink);
+}
+.ordersError {
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: #ef9a45;
+  color: var(--forest-night);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+.orderList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+.order {
+  display: grid;
+  gap: 10px;
+  padding: 14px;
+  border-radius: 16px;
+  background: #fffdf8;
+  color: var(--forest);
+  border-left: 8px solid var(--pink);
+  transition: box-shadow 0.3s;
+}
+.order[data-status="making"] {
+  border-left-color: var(--bulb);
+}
+.order[data-status="ready"] {
+  border-left-color: #237a4b;
+  opacity: 0.92;
+}
+.order[data-new="true"] {
+  box-shadow: 0 0 0 4px var(--pink);
+  animation: ding 0.5s ease-out 2;
+}
+@keyframes ding {
+  50% {
+    transform: scale(1.015);
+  }
+}
+.orderTop {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 12px;
+}
+.orderNo {
+  font-family: var(--font-board);
+  font-size: 2rem;
+  line-height: 1;
+  letter-spacing: 0.03em;
+}
+.orderWho {
+  display: grid;
+  font-weight: 700;
+  font-size: 1.05rem;
+  line-height: 1.2;
+  min-width: 0;
+}
+.orderWho small {
+  font-weight: 500;
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+.orderState {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--cream-deep);
+  font-size: 0.8rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.orderLines {
+  list-style: none;
+  margin: 0;
+  padding: 10px 0 0;
+  border-top: 1.5px dashed var(--cream-deep);
+  display: grid;
+  gap: 3px;
+  font-size: 0.98rem;
+}
+.orderBtn {
+  min-height: 50px;
+  font-size: 1.02rem;
+}
+@media (prefers-reduced-motion: reduce) {
+  .order[data-new="true"] {
+    animation: none;
+  }
+}

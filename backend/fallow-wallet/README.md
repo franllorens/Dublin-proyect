@@ -12,6 +12,10 @@ Backend del club de sellos para Fallow, multi-tenant. Son route handlers de Next
 | `POST /api/club/redeem` | Barista: canjea el café gratis y la tarjeta vuelve a 0 |
 | `GET /api/club/staff?tenant=` | Lista de baristas por local (id, nombre, local) para la PWA del barista. Sin PINs |
 | `POST /api/feedback` | «Tell the team privately» del sitio. Necesita `supabase/feedback.sql` |
+| `POST /api/orders` | Order ahead: crea el pedido (local, nombre, líneas, hora de retiro) y devuelve número y estado. Se paga en la ventanilla. Necesita `supabase/orders.sql` |
+| `GET /api/orders/:id` | Estado del pedido para el ticket del cliente |
+| `POST /api/orders/queue` | Barista (PIN): pedidos abiertos de hoy en su local, primero los que se retiran antes |
+| `POST /api/orders/:id/status` | Barista (PIN): avanza el pedido (making → ready → collected), solo hacia adelante y solo en su local |
 | `/api/apple/v1/...` | PassKit Web Service: registro de iPhones, lista de cambios, descarga del pase actualizado y log |
 
 Los sellos se guardan como eventos (`stamp_events`). La tabla `passes` solo guarda el número para cachear.
@@ -61,4 +65,5 @@ El sitio es estático (Cloudflare Pages) y llama a esta API desde el navegador. 
 - **Imagen de tira con los sellos dibujados.** Hoy el contador es texto («4/9»); la tira necesita generar la imagen en el servidor.
 - **Webhook de Instagram** (`story_mention`) para el sello por story. Va en la Fase 3, cuando Meta apruebe la app.
 - **Sesiones reales para el staff.** Hoy se valida el PIN en cada request; alcanza para un MVP.
-- **Rate limit en `/api/club/join`.**
+- **Rate limit en `/api/club/join` y `/api/orders`.**
+- **Pago online del pedido anticipado** (Stripe / Apple Pay): hoy se paga en la ventanilla. Para cobrar online hacen falta los precios de la vitrina.

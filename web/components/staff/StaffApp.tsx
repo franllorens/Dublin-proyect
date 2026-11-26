@@ -6,6 +6,7 @@ import { Wordmark } from "@/components/brand/Logo";
 import { LOCATIONS, shortName } from "@/lib/hours";
 import { api } from "@/lib/mode";
 import { RULES, demoRedeem, demoStamp, serverSnapshot, snapshot, subscribe, type DemoEvent } from "@/lib/demo-store";
+import { OrdersQueue } from "./OrdersQueue";
 import s from "./Staff.module.css";
 
 export type StaffMember = { id: string; name: string; location: string };
@@ -313,6 +314,8 @@ export function StaffApp({ live }: { live: boolean }) {
             </label>
           </div>
         )}
+
+        <OrdersQueue live={live} loc={loc} locName={locName} staffId={staffId} pin={pin} />
 
         <section className={s.scanner} aria-label="Scanner">
           <video ref={video} className={s.video} playsInline muted data-on={cam === "on"} />

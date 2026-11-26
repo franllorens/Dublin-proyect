@@ -1,6 +1,4 @@
 .section {
-  content-visibility: auto;
-  contain-intrinsic-size: auto 1700px;
   padding-block: clamp(64px, 10vw, 128px);
   background: var(--cream);
 }

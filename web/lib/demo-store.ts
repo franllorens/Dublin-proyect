@@ -6,6 +6,8 @@
  * cooldown on scans, one story stamp a week). Nothing leaves the page.
  */
 
+import { prefixFor, type Order, type OrderStatus } from "./order";
+
 export const RULES = { goal: 9, welcome: 1, cooldownMinutes: 10, storyPerWeek: 1 };
 
 export type Source = "scan" | "welcome" | "story";
@@ -16,9 +18,10 @@ export type DemoEvent =
   | { t: number; type: "redeem"; serial: string; name: string; location: string | null }
   | { t: number; type: "blocked"; serial: string; name: string; reason: string; location: string | null }
   | { t: number; type: "review_tap"; location: string }
-  | { t: number; type: "feedback"; location: string | null };
+  | { t: number; type: "feedback"; location: string | null }
+  | { t: number; type: "order"; id: string; location: string; items: number };
 
-type State = { cards: Record<string, DemoCard>; events: DemoEvent[] };
+type State = { cards: Record<string, DemoCard>; events: DemoEvent[]; orders: Record<string, Order> };
 
 const KEY = "fallow-demo-v1";
 const CH = "fallow-demo";
@@ -31,13 +34,16 @@ const SEED: DemoCard[] = [
 ];
 
 function fresh(): State {
-  return { cards: Object.fromEntries(SEED.map((c) => [c.serial, { ...c }])), events: [] };
+  return { cards: Object.fromEntries(SEED.map((c) => [c.serial, { ...c }])), events: [], orders: {} };
 }
 
 function read(): State {
   try {
     const raw = localStorage.getItem(KEY);
-    if (raw) return JSON.parse(raw) as State;
+    if (raw) {
+      const s = JSON.parse(raw) as Partial<State>;
+      return { cards: s.cards ?? fresh().cards, events: s.events ?? [], orders: s.orders ?? {} };
+    }
   } catch {
     /* private mode or blocked storage: fall through */
   }
@@ -175,3 +181,40 @@ export function demoLog(e: Extract<DemoEvent, { type: "review_tap" | "feedback" 
 export function demoReset() {
   save(fresh());
 }
+
+// ── Order ahead ─────────────────────────────────────────────
+
+const today = () => new Date().toDateString();
+
+export function demoPlaceOrder(o: Pick<Order, "location" | "name" | "lines" | "pickupAt" | "asap">): Order {
+  const s = structuredClone(load());
+  const sameDay = Object.values(s.orders).filter((x) => x.location === o.location && new Date(x.createdAt).toDateString() === today());
+  const order: Order = {
+    ...o,
+    id: crypto.randomUUID(),
+    number: `${prefixFor(o.location)}-${String(sameDay.length + 1).padStart(2, "0")}`,
+    status: "received",
+    createdAt: Date.now(),
+  };
+  s.orders[order.id] = order;
+  s.events.push({ t: order.createdAt, type: "order", id: order.id, location: o.location, items: o.lines.reduce((n, l) => n + l.qty, 0) });
+  save(s);
+  return order;
+}
+
+const FLOW: OrderStatus[] = ["received", "making", "ready", "collected"];
+
+/** Status only moves forward, so the barista and the demo autopilot can't fight. */
+export function demoSetOrderStatus(id: string, status: OrderStatus) {
+  const s = structuredClone(load());
+  const o = s.orders[id];
+  if (!o || FLOW.indexOf(status) <= FLOW.indexOf(o.status)) return o ?? null;
+  o.status = status;
+  save(s);
+  return o;
+}
+
+export const demoOrdersFor = (location: string) =>
+  Object.values(load().orders)
+    .filter((o) => o.location === location && o.status !== "collected" && new Date(o.createdAt).toDateString() === today())
+    .sort((a, b) => a.pickupAt - b.pickupAt || a.createdAt - b.createdAt);

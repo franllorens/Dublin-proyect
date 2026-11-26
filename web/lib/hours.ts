@@ -110,6 +110,10 @@ export function headline(now: DublinNow) {
   return { open: false, text: "Closed right now", detail: `Back ${whenLabel(next.s)} · ${shortName(next.l)}` };
 }
 
+/** Walking directions to the exact pin (order ahead: "walk down when it suits you"). */
+export const directionsUrl = (loc: Location) =>
+  `https://www.google.com/maps/dir/?api=1&destination=${loc.lat}%2C${loc.lng}&travelmode=walking`;
+
 /** Exact pin from locations.json. */
 export const mapsUrl = (loc: Location) => `https://www.google.com/maps/search/?api=1&query=${loc.lat}%2C${loc.lng}`;
 

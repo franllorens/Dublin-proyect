@@ -4,8 +4,8 @@ Demo para presentarle a Fallow (Dublín). Next.js 14 (App Router, TypeScript) ex
 
 | Ruta | Qué es |
 | --- | --- |
-| `/` | Sitio público (inglés, mobile-first) |
-| `/staff` | PWA del barista: escáner, sello, canje, feed del día |
+| `/` | Sitio público (inglés, mobile-first), con **Order ahead** para pedir desde la oficina |
+| `/staff` | PWA del barista: pedidos entrantes, escáner, sello, canje, feed del día |
 | `/owner` | Panel del dueño: KPIs, gráficos, listas, aviso al pase. **Datos de ejemplo.** |
 
 ## Correrlo en modo demo (sin cuentas)
@@ -21,6 +21,8 @@ Abrí http://localhost:3000. Sin `NEXT_PUBLIC_API_URL` todo el club corre **simu
 1. En `/`, sección *Fallow Club*: poné un nombre y tocá **Add to Apple Wallet**. La tarjeta entra al Wallet con resorte y aparece la pantalla de bloqueo. Después **Be the barista** estampa los sellos.
 2. En `/staff` aparecen esa tarjeta y tres tarjetas de ejemplo. Tocá una para «escanearla»; si la volvés a tocar, se bloquea en naranja por el doble escaneo.
 3. En `/owner` los KPIs suman lo que hiciste (`+n live`).
+
+**Order ahead** (sección justo después del hero): el oficinista elige el local, el café (precios exactos del tablero, frío o caliente, leche, shot, syrup) y algo de la vitrina, que va «priced at the hatch» porque no hay precios publicados. Después elige la hora y su nombre y envía el pedido. Paga en la ventanilla. En demo, abrí `/staff` en otra pestaña, elegí el mismo local y vas a ver entrar el ticket (por ejemplo «N-01»). Cada botón del barista («Start making» → «On the counter» → «Collected») actualiza en vivo el ticket del cliente. Si nadie lo toca, el demo avanza solo en unos segundos.
 
 **Probar el hero a cualquier hora.** La compuerta del trailer se abre solo si hay algún local abierto según la hora de Dublín. Para mostrarlo fuera de horario:
 
@@ -48,6 +50,7 @@ Qué cambia en modo real:
 - **Add to Apple / Google Wallet** llama a `POST {API}/api/club/join`. En iPhone abre el `.pkpass`, en Android el link de Google, y en desktop muestra los dos links. Si la API falla, cae a demo y lo avisa.
 - **`/staff`** pide la lista de baristas a `GET {API}/api/club/staff` y el PIN, que vive en `sessionStorage`. Escaneo y canje pegan contra `POST {API}/api/club/stamp` y `/api/club/redeem`.
 - **Reseñas privadas** van a `POST {API}/api/feedback`.
+- **Order ahead** crea el pedido con `POST {API}/api/orders` y el ticket del cliente consulta `GET {API}/api/orders/:id` cada 8 s. El barista ve su cola con `POST {API}/api/orders/queue` (cada 10 s, con PIN) y la avanza con `POST {API}/api/orders/:id/status`. Necesita `supabase/orders.sql`.
 - **Be the barista** sigue siendo una simulación en el mockup: los sellos reales solo salen del escáner.
 - **`/owner`** sigue con datos de ejemplo. Conectarlo a la base es el paso siguiente.
 

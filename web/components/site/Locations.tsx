@@ -57,7 +57,6 @@ export function Locations() {
                 src={photo}
                 alt="A Fallow cup with the pink seal held up in front of the cream trailer at Bizquip, Sandyford."
                 sizes="(min-width: 900px) 40vw, 100vw"
-                placeholder="blur"
               />
               <figcaption className="placeholder">Placeholder photo · replace</figcaption>
             </figure>

@@ -92,7 +92,6 @@ export function Blend() {
             src={photo}
             alt="A Fallow cup with the pink seal on a terracotta table, the back of the cream trailer behind it."
             sizes="(min-width: 900px) 30vw, 60vw"
-            placeholder="blur"
           />
           <figcaption className="placeholder">Placeholder photo · replace</figcaption>
         </figure>

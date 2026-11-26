@@ -28,4 +28,4 @@ export function middleware(req: NextRequest) {
   return res;
 }
 
-export const config = { matcher: ["/api/club/:path*", "/api/feedback"] };
+export const config = { matcher: ["/api/club/:path*", "/api/feedback", "/api/orders", "/api/orders/:path*"] };

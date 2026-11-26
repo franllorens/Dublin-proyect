@@ -15,7 +15,7 @@ export function SmoothScroll() {
     const start = () =>
       import("lenis").then(({ default: Lenis }) => {
         if (cancelled) return;
-        lenis = new Lenis({ autoRaf: true, lerp: 0.12, anchors: { offset: -64 } });
+        lenis = new Lenis({ autoRaf: true, lerp: 0.12, anchors: true });
       });
     const id = window.setTimeout(start, 900);
     return () => {
